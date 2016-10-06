@@ -1,3 +1,15 @@
+# Yo generator config
+.yo-rc.json
+
+# Temp directory
+.tmp
+
+# Build directory
+dist
+
+# Jetbrains ide directory
+.idea
+
 # Logs
 logs
 *.log
