@@ -16,7 +16,6 @@ module.exports = {
         loader: 'eslint'
       }
     ],
-
     loaders: [
       {
         test: /.json$/,
@@ -26,7 +25,7 @@ module.exports = {
       },
       {
         test:   /\.(png|gif|jpe?g|svg)$/i,
-        loader: 'url?limit=10000',
+        loader: 'url?limit=8192',
       },
       {
         test: /\.(css|scss)$/,
@@ -71,7 +70,7 @@ module.exports = {
     filename: '[name]-[hash].js'
   },
   entry: {
-    app: `./${conf.path.src('index')}`,
+    app: `./${conf.path.src('app')}`,
     vendor: Object.keys(pkg.dependencies)
   }
 };
