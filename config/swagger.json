@@ -1,0 +1,1529 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Webcrow API",
+        "description": "Test web application with Webcrow API",
+        "version": "1.0.0"
+    },
+    "host": "localhost:3000",
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "basePath": "/v1",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/projects": {
+            "get": {
+                "summary": "Get projects",
+                "tags": [
+                    "Project"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of projects",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Project"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/project": {
+            "post": {
+                "summary": "Create porject",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "project",
+                        "in": "body",
+                        "description": "Project object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Project"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Project created successfully"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update porject name",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "description": "Project name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "New project name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Project name updated successfully"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete project",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "formData",
+                        "description": "Project name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Project deleted successfully"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/directory": {
+            "post": {
+                "summary": "Create directory",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "directory",
+                        "in": "body",
+                        "description": "Directory object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Directory"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Directory"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Directory created successfully"
+                    },
+                    "403": {
+                        "description": "Directory must be inside the project folder"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update directory name",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "formData",
+                        "description": "Project name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "directoryId",
+                        "in": "formData",
+                        "description": "Directory path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "New directory name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Directory"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Directory name updated successfully"
+                    },
+                    "403": {
+                        "description": "Directory must be inside the project folder"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete directory",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "formData",
+                        "description": "Project name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "directoryId",
+                        "in": "formData",
+                        "description": "Directory path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Directory"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Directory deleted successfully"
+                    },
+                    "403": {
+                        "description": "Directory must be inside the project folder"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/directory/entries": {
+            "get": {
+                "summary": "Get directory entries",
+                "tags": [
+                    "Directory",
+                    "Fixture"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of directory entries",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/DirectoryEntry"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/fixture": {
+            "post": {
+                "summary": "Create fixture",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "fixture",
+                        "in": "body",
+                        "description": "Fixture object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Fixture"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Fixture"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Fixture created successfully"
+                    },
+                    "403": {
+                        "description": "Directory must be inside the project folder"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update fixture details",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "formData",
+                        "description": "Project name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "directoryId",
+                        "in": "formData",
+                        "description": "Directory path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fixtureId",
+                        "in": "formData",
+                        "description": "Fixture name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "New fixture name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "page",
+                        "in": "formData",
+                        "description": "New page url",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "New Basic HTTP authentication username",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "New Basic HTTP authentication password",
+                        "required": false,
+                        "type": "string",
+                        "format": "password"
+                    }
+                ],
+                "tags": [
+                    "Fixture"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Fixture details updated successfully"
+                    },
+                    "403": {
+                        "description": "Directory must be inside the project folder"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete fixture",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "formData",
+                        "description": "Project name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "directoryId",
+                        "in": "formData",
+                        "description": "Directory path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fixtureId",
+                        "in": "formData",
+                        "description": "Fixture name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Fixture"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Fixture deleted successfully"
+                    },
+                    "403": {
+                        "description": "Directory must be inside the project folder"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/fixture/code": {
+            "get": {
+                "summary": "Get fixture code",
+                "produces": [
+                    "text/javascript"
+                ],
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "query",
+                        "description": "Project name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "directoryId",
+                        "in": "query",
+                        "description": "Directory path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fixtureId",
+                        "in": "query",
+                        "description": "Fixture name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Fixture",
+                    "Code"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fixture code",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Directory must be inside the project folder"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update fixture code",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "formData",
+                        "description": "Project name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "directoryId",
+                        "in": "formData",
+                        "description": "Directory path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fixtureId",
+                        "in": "formData",
+                        "description": "Fixture name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code",
+                        "in": "formData",
+                        "description": "New code",
+                        "required": true,
+                        "type": "string",
+                        "format": "byte"
+                    }
+                ],
+                "tags": [
+                    "Fixture",
+                    "Code"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Fixture code updated successfully"
+                    },
+                    "403": {
+                        "description": "Directory must be inside the project folder"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/test": {
+            "post": {
+                "summary": "Create test",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "test",
+                        "in": "body",
+                        "description": "Test object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Test"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Test"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Fixture code updated successfully"
+                    },
+                    "403": {
+                        "description": "Directory must be inside the project folder"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update test name",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "formData",
+                        "description": "Project name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "directoryId",
+                        "in": "formData",
+                        "description": "Directory path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fixtureId",
+                        "in": "formData",
+                        "description": "Fixture name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "testId",
+                        "in": "formData",
+                        "description": "Test name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "New test name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Test"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Test name updated successfully"
+                    },
+                    "403": {
+                        "description": "Directory must be inside the project folder"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete test",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "projectId",
+                        "in": "formData",
+                        "description": "Project name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "directoryId",
+                        "in": "formData",
+                        "description": "Directory path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fixtureId",
+                        "in": "formData",
+                        "description": "Fixture name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "testId",
+                        "in": "formData",
+                        "description": "Test name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Test"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Test deleted successfully"
+                    },
+                    "403": {
+                        "description": "Directory must be inside the project folder"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/record": {
+            "get": {
+                "summary": "Get page for recording",
+                "produces": [
+                    "text/html"
+                ],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page url",
+                        "required": true,
+                        "type": "string",
+                        "pattern": "^((http[s]?|ftp):\\/\\/)?([^:\\/\\s]+)((\\/\\w+)*\\/)([\\w\\-\\.]+[^#?\\s]+)(.*)?(#[\\w\\-]+)?$"
+                    }
+                ],
+                "tags": [
+                    "Record"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Page ready for recording",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/run": {
+            "post": {
+                "summary": "Run tests",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "tests",
+                        "in": "body",
+                        "description": "An array of tests",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Test"
+                            }
+                        }
+                    }
+                ],
+                "tags": [
+                    "Fixture",
+                    "Test",
+                    "Run"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Test execution launched successfully"
+                    },
+                    "403": {
+                        "description": "Directory must be inside the project folder"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/reports": {
+            "get": {
+                "summary": "Get reports",
+                "tags": [
+                    "Report"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of reports",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ReportMetadata"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/report": {
+            "get": {
+                "summary": "Get report",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Report id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Report"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Report",
+                        "schema": {
+                            "$ref": "#/definitions/Report"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete report",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "description": "Report id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Report"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Report deleted successfully"
+                    },
+                    "403": {
+                        "description": "Directory must be inside the project folder"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/report/export": {
+            "get": {
+                "summary": "Export report to format",
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Report id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "format",
+                        "in": "query",
+                        "description": "Format name",
+                        "required": true,
+                        "type": "string",
+                        "enum": [
+                            "JSON",
+                            "JUnit",
+                            "NUnit",
+                            "TRX"
+                        ]
+                    }
+                ],
+                "tags": [
+                    "Report"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fixture code",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Directory must be inside the project folder"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Project": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Project name"
+                }
+            }
+        },
+        "DirectoryEntry": {
+            "discriminator": "directoryEntryType",
+            "additionalProperties": true,
+            "type": "object"
+        },
+        "Directory": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/DirectoryEntry"
+                },
+                {
+                    "properties": {
+                        "project": {
+                            "$ref": "#/definitions/Project"
+                        },
+                        "id": {
+                            "type": "string",
+                            "description": "Directory path"
+                        }
+                    }
+                }
+            ]
+        },
+        "Fixture": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/DirectoryEntry"
+                },
+                {
+                    "properties": {
+                        "directory": {
+                            "$ref": "#/definitions/Directory"
+                        },
+                        "id": {
+                            "type": "string",
+                            "description": "Fixture name"
+                        },
+                        "page": {
+                            "type": "string",
+                            "description": "Page url"
+                        },
+                        "username": {
+                            "type": "string",
+                            "description": "Basic HTTP authentication username"
+                        },
+                        "password": {
+                            "type": "string",
+                            "format": "password",
+                            "description": "Basic HTTP authentication password"
+                        }
+                    }
+                }
+            ]
+        },
+        "Test": {
+            "type": "object",
+            "properties": {
+                "fixture": {
+                    "$ref": "#/definitions/Fixture"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "Test name"
+                },
+                "steps": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TestStep"
+                    }
+                }
+            }
+        },
+        "TestStep": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Step name"
+                },
+                "action": {
+                    "$ref": "#/definitions/ActionType"
+                },
+                "actionArguments": {
+                    "$ref": "#/definitions/ActionArguments"
+                },
+                "selectors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Selector"
+                    }
+                },
+                "iFrameSelectors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Selector"
+                    }
+                },
+                "selectorIndex": {
+                    "type": "integer",
+                    "description": "Chosen selector index",
+                    "minimum": 0
+                },
+                "iFrameSelectorIndex": {
+                    "type": "integer",
+                    "description": "Chosen iframe selector index",
+                    "minimum": 0
+                },
+                "dialogHandlers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/DialogHandler"
+                    }
+                }
+            }
+        },
+        "Selector": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Type of selector"
+                },
+                "selector": {
+                    "type": "string",
+                    "description": "Selector string"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Selector description"
+                }
+            }
+        },
+        "ActionArguments": {
+            "discriminator": "actionArgumentsType",
+            "additionalProperties": true,
+            "type": "object"
+        },
+        "ClickActionArguments": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ActionArguments"
+                },
+                {
+                    "properties": {
+                        "ctrl": {
+                            "type": "boolean",
+                            "description": "Should ctrl key be pressed"
+                        },
+                        "alt": {
+                            "type": "boolean",
+                            "description": "Should alt key be pressed"
+                        },
+                        "shift": {
+                            "type": "boolean",
+                            "description": "Should shift key be pressed"
+                        },
+                        "meta": {
+                            "type": "boolean",
+                            "description": "Should meta key be pressed"
+                        },
+                        "offsetX": {
+                            "type": "integer",
+                            "description": "Click x offset"
+                        },
+                        "offsetY": {
+                            "type": "integer",
+                            "description": "Click y offset"
+                        }
+                    }
+                }
+            ]
+        },
+        "TypeActionArguments": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ClickActionArguments"
+                },
+                {
+                    "properties": {
+                        "caretPos": {
+                            "type": "integer",
+                            "description": "Caret position in input field",
+                            "minimum": 0
+                        }
+                    }
+                }
+            ]
+        },
+        "WaitActionArguments": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ActionArguments"
+                },
+                {
+                    "properties": {
+                        "ms": {
+                            "type": "integer",
+                            "description": "Milliseconds to wait",
+                            "minimum": 0
+                        }
+                    }
+                }
+            ]
+        },
+        "ScreenshotActionArguments": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ActionArguments"
+                }
+            ]
+        },
+        "DragActionArguments": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ClickActionArguments"
+                },
+                {
+                    "properties": {
+                        "dragOffsetX": {
+                            "type": "integer",
+                            "description": "Drag x offset"
+                        },
+                        "dragOffsetY": {
+                            "type": "integer",
+                            "description": "Drag y offset"
+                        }
+                    }
+                }
+            ]
+        },
+        "PressActionArguments": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ActionArguments"
+                },
+                {
+                    "properties": {
+                        "keysCommand": {
+                            "type": "string",
+                            "description": "Keys combination to press"
+                        }
+                    }
+                }
+            ]
+        },
+        "UploadActionArguments": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ActionArguments"
+                },
+                {
+                    "properties": {
+                        "files": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "NavigateActionArguments": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ActionArguments"
+                },
+                {
+                    "properties": {
+                        "url": {
+                            "type": "string",
+                            "description": "Navigation url",
+                            "pattern": "^((http[s]?|ftp):\\/\\/)?([^:\\/\\s]+)((\\/\\w+)*\\/)([\\w\\-\\.]+[^#?\\s]+)(.*)?(#[\\w\\-]+)?$"
+                        }
+                    }
+                }
+            ]
+        },
+        "AssertActionArguments": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ActionArguments"
+                },
+                {
+                    "properties": {
+                        "assertions": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/AssertionArgument"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "AssertionArgument": {
+            "type": "object",
+            "properties": {
+                "operator": {
+                    "type": "string",
+                    "enum": [
+                        "eq",
+                        "notEq",
+                        "ok",
+                        "notOk"
+                    ]
+                },
+                "message": {
+                    "type": "string",
+                    "description": "Assertion message"
+                },
+                "arguments": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "DialogHandler": {
+            "discriminator": "dialogHandlerType",
+            "additionalProperties": true,
+            "type": "object",
+            "properties": {
+                "dialog": {
+                    "type": "string",
+                    "description": "Dialog type",
+                    "enum": [
+                        "alert",
+                        "confirm",
+                        "prompt",
+                        "beforeUnload"
+                    ]
+                }
+            }
+        },
+        "AlertDialogHandler": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/DialogHandler"
+                }
+            ]
+        },
+        "ConfirmDialogHandler": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/DialogHandler"
+                },
+                {
+                    "properties": {
+                        "returnValue": {
+                            "type": "boolean",
+                            "description": "Confirm dialog return value"
+                        }
+                    }
+                }
+            ]
+        },
+        "PromptDialogHandler": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/DialogHandler"
+                },
+                {
+                    "properties": {
+                        "returnValue": {
+                            "type": "string",
+                            "description": "Prompt dialog return value"
+                        }
+                    }
+                }
+            ]
+        },
+        "BeforeUnloadDialogHandler": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/DialogHandler"
+                }
+            ]
+        },
+        "ReportMetadata": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Report id"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Report name"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "Report status",
+                    "enum": [
+                        "succeeded",
+                        "failed"
+                    ]
+                },
+                "start": {
+                    "type": "string",
+                    "format": "dateTime",
+                    "description": "Test run start date"
+                },
+                "end": {
+                    "type": "string",
+                    "format": "dateTime",
+                    "description": "Test run end date"
+                },
+                "duration": {
+                    "type": "integer",
+                    "description": "Duration of test run",
+                    "minimum": 0
+                },
+                "workers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Worker"
+                    }
+                },
+                "testCount": {
+                    "type": "integer",
+                    "description": "Test count",
+                    "minimum": 0
+                },
+                "failed": {
+                    "type": "integer",
+                    "description": "Failed test count",
+                    "minimum": 0
+                },
+                "passed": {
+                    "type": "integer",
+                    "description": "Passed test count",
+                    "minimum": 0
+                }
+            }
+        },
+        "Worker": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Worker name"
+                },
+                "browser": {
+                    "$ref": "#/definitions/Browser"
+                }
+            }
+        },
+        "Browser": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Browser name"
+                },
+                "version": {
+                    "type": "string",
+                    "description": "Browser version"
+                }
+            }
+        },
+        "Report": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ReportMetadata"
+                },
+                {
+                    "properties": {
+                        "passedTests": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PassedTest"
+                            }
+                        },
+                        "failedTests": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/FailedTest"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "ReportTest": {
+            "type": "object",
+            "properties": {
+                "fixture": {
+                    "$ref": "#/definitions/Fixture"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "Test name"
+                },
+                "duration": {
+                    "type": "integer",
+                    "description": "Duration of test run",
+                    "minimum": 0
+                },
+                "worker": {
+                    "$ref": "#/definitions/Worker"
+                }
+            }
+        },
+        "PassedTest": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ReportTest"
+                }
+            ]
+        },
+        "FailedTest": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ReportTest"
+                },
+                {
+                    "properties": {
+                        "testError": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/TestError"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "TestError": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "description": "Error message"
+                },
+                "stepName": {
+                    "type": "string",
+                    "description": "Step name"
+                },
+                "action": {
+                    "$ref": "#/definitions/ActionType"
+                },
+                "sourceCode": {
+                    "type": "string",
+                    "description": "Step source code"
+                }
+            }
+        },
+        "ActionType": {
+            "type": "string",
+            "description": "Action type",
+            "enum": [
+                "click",
+                "dblclick",
+                "rclick",
+                "type",
+                "wait",
+                "hover",
+                "screenshot",
+                "drag",
+                "press",
+                "upload",
+                "navigate",
+                "assert"
+            ]
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

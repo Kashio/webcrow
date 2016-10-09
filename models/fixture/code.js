@@ -1,0 +1,93 @@
+'use strict';
+var Mockgen = require('../mockgen.js');
+/**
+ * Operations on /fixture/code
+ */
+module.exports = {
+    /**
+     * summary: Get fixture code
+     * description: 
+     * parameters: projectId, directoryId, fixtureId
+     * produces: text/javascript
+     * responses: 200, 403, default
+     * operationId: 
+     */
+    get: {
+        200: function (req, res, callback) {
+            /**
+             * Using mock data generator module.
+             * Replace this by actual data for the api.
+             */
+            Mockgen().responses({
+                path: '/fixture/code',
+                operation: 'get',
+                response: '200'
+            }, callback);
+        },
+        403: function (req, res, callback) {
+            /**
+             * Using mock data generator module.
+             * Replace this by actual data for the api.
+             */
+            Mockgen().responses({
+                path: '/fixture/code',
+                operation: 'get',
+                response: '403'
+            }, callback);
+        },
+        default: function (req, res, callback) {
+            /**
+             * Using mock data generator module.
+             * Replace this by actual data for the api.
+             */
+            Mockgen().responses({
+                path: '/fixture/code',
+                operation: 'get',
+                response: 'default'
+            }, callback);
+        }
+    },
+    /**
+     * summary: Update fixture code
+     * description: 
+     * parameters: projectId, directoryId, fixtureId, code
+     * produces: 
+     * responses: 204, 403, default
+     * operationId: 
+     */
+    put: {
+        204: function (req, res, callback) {
+            /**
+             * Using mock data generator module.
+             * Replace this by actual data for the api.
+             */
+            Mockgen().responses({
+                path: '/fixture/code',
+                operation: 'put',
+                response: '204'
+            }, callback);
+        },
+        403: function (req, res, callback) {
+            /**
+             * Using mock data generator module.
+             * Replace this by actual data for the api.
+             */
+            Mockgen().responses({
+                path: '/fixture/code',
+                operation: 'put',
+                response: '403'
+            }, callback);
+        },
+        default: function (req, res, callback) {
+            /**
+             * Using mock data generator module.
+             * Replace this by actual data for the api.
+             */
+            Mockgen().responses({
+                path: '/fixture/code',
+                operation: 'put',
+                response: 'default'
+            }, callback);
+        }
+    }
+};
