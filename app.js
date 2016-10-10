@@ -14,7 +14,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'src')));
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use(swaggerize({
   api: path.join(__dirname, 'config/swagger.json'),
   handlers: path.join(__dirname, 'routes')
@@ -27,7 +27,7 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
+// error routes
 
 // development error handler
 // will print stacktrace
