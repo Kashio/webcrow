@@ -24,7 +24,7 @@ module.exports = {
         ]
       },
       {
-        test:   /\.(png|gif|jpe?g|svg)$/i,
+        test: /\.(woff2?|eot|ttf|png|gif|jpe?g|svg)$/i,
         loader: 'url?limit=8192',
       },
       {
@@ -71,6 +71,11 @@ module.exports = {
   },
   entry: {
     app: `./${conf.path.src('app')}`,
-    vendor: Object.keys(pkg.dependencies)
+    // vendor: Object.keys(pkg.dependencies)
+    vendor: [
+      'vue',
+      'vue-resource',
+      'vue-router'
+    ]
   }
 };

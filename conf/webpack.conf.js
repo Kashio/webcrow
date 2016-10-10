@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const conf = require('./gulp.conf');
 const path = require('path');
 
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
@@ -18,31 +19,27 @@ module.exports = {
     loaders: [
       {
         test: /.json$/,
-        loaders: [
-          'json'
-        ]
+        loader: 'json'
+      },
+      {
+        test: /\.(woff2?|eot|ttf|png|gif|jpe?g|svg)$/i,
+        loader: 'url?limit=8192',
       },
       {
         test: /\.(css|scss)$/,
-        loaders: [
-          'style',
-          'css',
-          'sass',
-          'postcss'
-        ]
+        loaders: ExtractTextPlugin.extract({
+          fallbackLoader: 'style',
+          loader: 'css!sass!postcss'
+        })
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: [
-          'babel'
-        ]
+        loader: 'babel'
       },
       {
         test: /.vue$/,
-        loaders: [
-          'vue'
-        ]
+        loader: 'vue'
       }
     ]
   },
@@ -51,8 +48,19 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: conf.path.src('index.html')
-    })
+    }),
+    new ExtractTextPlugin("style.css"),
   ],
+  vue: {
+    postcss: [
+      autoprefixer({
+        browsers: ['last 2 versions']
+      })
+    ],
+    loaders: {
+      sass: ExtractTextPlugin.extract("css!sass")
+    }
+  },
   postcss: () => [autoprefixer],
   debug: true,
   devtool: 'source-map',

@@ -7,26 +7,19 @@ module.exports = {
         loader: 'eslint'
       }
     ],
-
     loaders: [
       {
         test: /.json$/,
-        loaders: [
-          'json'
-        ]
+        loader: 'json'
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: [
-          'babel'
-        ]
+        loader: 'babel'
       },
       {
         test: /.vue$/,
-        loaders: [
-          'vue'
-        ]
+        loader: 'vue'
       }
     ]
   },
