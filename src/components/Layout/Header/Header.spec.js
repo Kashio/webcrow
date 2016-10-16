@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-import { router } from '../../../router/router';
+import { router } from '../../../router';
 
 import Header from './Header.vue';
 

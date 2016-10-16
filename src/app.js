@@ -1,8 +1,8 @@
 import Vue from 'vue';
 
-import './index.scss';
+import './css/index.scss';
 
-import { router } from './router/router';
+import { router } from './router';
 
 export default new Vue({
   el: '#app',
