@@ -69,7 +69,8 @@ module.exports = {
     vendor: [
       'vue',
       'vue-resource',
-      'vue-router'
+      'vue-router',
+      'vuex'
     ]
   }
 };
