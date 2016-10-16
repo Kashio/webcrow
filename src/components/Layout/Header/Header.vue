@@ -36,6 +36,8 @@
       }
       display: table-cell;
       padding-left: 10px;
+      padding-top: 10px;
+      float: left;
       vertical-align: middle;
       text-decoration: none;
       color: $brand-color;
