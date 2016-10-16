@@ -19,9 +19,7 @@ module.exports = {
     loaders: [
       {
         test: /.json$/,
-        loaders: [
-          'json'
-        ]
+        loader: 'json'
       },
       {
         test: /\.(woff2?|eot|ttf|png|gif|jpe?g|svg)$/i,
@@ -37,15 +35,11 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: [
-          'babel'
-        ]
+        loader: 'babel'
       },
       {
         test: /.vue$/,
-        loaders: [
-          'vue'
-        ]
+        loader: 'vue'
       }
     ]
   },
