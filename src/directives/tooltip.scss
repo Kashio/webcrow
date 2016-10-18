@@ -1,0 +1,29 @@
+$font-stack: 'Open Sans', sans-serif;
+$background-color: rgba(0, 0, 0, .8);
+$color: #cacaca;
+$arrow-border-width: 5px;
+
+.tooltip-container {
+  position: absolute;
+  background-color: red;
+}
+
+.tooltip {
+  line-height: 2;
+  position: absolute;
+  padding: 0 5px;
+  background-color: $background-color;
+  color: $color;
+  border-radius: 3px;
+  font-size: .75rem;
+  font-family: $font-stack;
+  white-space: pre;
+}
+
+.arrow {
+  position: absolute;
+  content: '';
+  border: $arrow-border-width solid transparent;
+  height: 0;
+  width: 0;
+}
