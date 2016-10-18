@@ -1,7 +1,7 @@
 export const links = [
   {
     icon: 'fa-archive',
-    description: 'Project',
+    description: 'Projects',
     to: '/project'
   },
   {

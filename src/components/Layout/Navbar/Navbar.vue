@@ -2,7 +2,7 @@
   <nav class="navigation-container">
     <div class="navigation">
       <div class="links">
-        <router-link v-for="link in links" :to="link.to" class="link">
+        <router-link v-for="link in links" :to="link.to" class="link" v-tooltip="{ message: link.description }">
             <i class="fa" :class="link.icon"></i>
         </router-link>
       </div>
