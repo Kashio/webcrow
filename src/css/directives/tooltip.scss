@@ -3,12 +3,7 @@ $background-color: rgba(0, 0, 0, .8);
 $color: #cacaca;
 $arrow-border-width: 5px;
 
-.tooltip-container {
-  position: absolute;
-  background-color: red;
-}
-
-.tooltip {
+:local .tooltip {
   line-height: 2;
   position: absolute;
   padding: 0 5px;
@@ -20,7 +15,7 @@ $arrow-border-width: 5px;
   white-space: pre;
 }
 
-.arrow {
+:local .arrow {
   position: absolute;
   content: '';
   border: $arrow-border-width solid transparent;

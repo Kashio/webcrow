@@ -1,5 +1,5 @@
 import $ from "jquery";
-import './tooltip.scss';
+import '../../css/directives/tooltip.scss';
 
 const TOOLTIP_CLASS = 'tooltip';
 const TOOLTIP_ARROW_CLASS = 'arrow';
