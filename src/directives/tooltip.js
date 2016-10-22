@@ -1,8 +1,8 @@
 import $ from "jquery";
-import '../../css/directives/tooltip.scss';
+import classes from '../css/directives/tooltip.scss';
 
-const TOOLTIP_CLASS = 'tooltip';
-const TOOLTIP_ARROW_CLASS = 'arrow';
+const TOOLTIP_CLASS = classes.tooltip;
+const TOOLTIP_ARROW_CLASS = classes.arrow;
 const TOOLTIP_ARROW_BORDER_WIDTH = 5;
 const TOOLTIP_DEFAULT_MARGIN = 2;
 const TOOLTIP_DEFAULT_BACKGROUND_COLOR = 'rgba(0, 0, 0, .8)';
