@@ -1,5 +1,6 @@
 import Vue from 'vue';
 
+import '../../../directives';
 import { router } from '../../../router';
 
 import Navbar from './Navbar.vue';
@@ -13,7 +14,7 @@ describe('Navbar', () => {
       links: [
         {
           icon: 'fa-archive',
-          description: 'Project',
+          description: 'Projects',
           to: '/project'
         },
         {
