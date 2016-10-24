@@ -1,11 +1,11 @@
 import $ from "jquery";
-import classes from '../css/directives/tooltip.scss';
+import style from '../../css/directives/tooltip.scss';
 
-const TOOLTIP_CLASS = classes.tooltip;
-const TOOLTIP_ARROW_CLASS = classes.arrow;
+const TOOLTIP_CLASS = style.tooltip;
+const TOOLTIP_ARROW_CLASS = style.arrow;
 const TOOLTIP_ARROW_BORDER_WIDTH = 5;
 const TOOLTIP_DEFAULT_MARGIN = 2;
-const TOOLTIP_DEFAULT_BACKGROUND_COLOR = 'rgba(0, 0, 0, .8)';
+const TOOLTIP_DEFAULT_BACKGROUND_COLOR = 'rgba(0, 0, 0, 0.8)';
 const TOOLTIP_DEFAULT_FADE_SPEED = 'slow';
 const TOOLTIP_DEFAULT_POSITION = 'right';
 const POSITION_FN = {
@@ -37,7 +37,7 @@ export const tooltip = {
   }
 };
 
-export function createTooltip($body, $el, binding) {
+function createTooltip($body, $el, binding) {
   const $arrow = createTooltipArrow();
   const $tooltip = $(document.createElement('span'));
   $tooltip.html(binding.value.message);
@@ -55,13 +55,13 @@ export function createTooltip($body, $el, binding) {
   return $tooltip;
 }
 
-export function createTooltipArrow() {
+function createTooltipArrow() {
   const $arrow = $(document.createElement('span'));
   $arrow.addClass(TOOLTIP_ARROW_CLASS);
   return $arrow;
 }
 
-export function positionTooltipToTop($el, $tooltip, $arrow, binding) {
+function positionTooltipToTop($el, $tooltip, $arrow, binding) {
   $tooltip.css({
     top: $el.offset().top - $tooltip.outerHeight() - (TOOLTIP_ARROW_BORDER_WIDTH + (binding.value.margin || TOOLTIP_DEFAULT_MARGIN)),
     left: $el.offset().left + ($el.outerWidth() / 2) - ($tooltip.outerWidth() / 2)
@@ -74,7 +74,7 @@ export function positionTooltipToTop($el, $tooltip, $arrow, binding) {
   });
 }
 
-export function positionTooltipToRight($el, $tooltip, $arrow, binding) {
+function positionTooltipToRight($el, $tooltip, $arrow, binding) {
   $tooltip.css({
     top: $el.offset().top + ($el.outerHeight() / 2) - ($tooltip.outerHeight() / 2),
     left: $el.offset().left + $el.outerWidth() + TOOLTIP_ARROW_BORDER_WIDTH + (binding.value.margin || TOOLTIP_DEFAULT_MARGIN)
@@ -87,7 +87,7 @@ export function positionTooltipToRight($el, $tooltip, $arrow, binding) {
   });
 }
 
-export function positionTooltipToLeft($el, $tooltip, $arrow, binding) {
+function positionTooltipToLeft($el, $tooltip, $arrow, binding) {
   $tooltip.css({
     top: $el.offset().top + ($el.outerHeight() / 2) - ($tooltip.outerHeight() / 2),
     left: $el.offset().left - $tooltip.outerWidth() - (TOOLTIP_ARROW_BORDER_WIDTH + (binding.value.margin || TOOLTIP_DEFAULT_MARGIN))
@@ -100,7 +100,7 @@ export function positionTooltipToLeft($el, $tooltip, $arrow, binding) {
   });
 }
 
-export function positionTooltipToBottom($el, $tooltip, $arrow, binding) {
+function positionTooltipToBottom($el, $tooltip, $arrow, binding) {
   $tooltip.css({
     top: $el.offset().top + $el.outerHeight() + TOOLTIP_ARROW_BORDER_WIDTH + (binding.value.margin || TOOLTIP_DEFAULT_MARGIN),
     left: $el.offset().left + ($el.outerWidth() / 2) - ($tooltip.outerWidth() / 2)
