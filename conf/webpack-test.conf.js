@@ -13,6 +13,10 @@ module.exports = {
         loader: 'json'
       },
       {
+        test: /\.(css|scss)$/,
+        loaders: 'style!css!sass'
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel'
@@ -25,5 +29,5 @@ module.exports = {
   },
   plugins: [],
   debug: true,
-  devtool: 'source-map'
+  devtool: 'inline-source-map'
 };

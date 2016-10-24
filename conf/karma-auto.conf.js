@@ -21,7 +21,8 @@ module.exports = function (config) {
     ],
     preprocessors: {
       [conf.path.src('app.spec.js')]: [
-        'webpack'
+        'webpack',
+        'sourcemap'
       ]
     },
     reporters: ['progress', 'coverage'],
@@ -39,7 +40,8 @@ module.exports = function (config) {
       require('karma-coverage'),
       require('karma-phantomjs-launcher'),
       require('karma-phantomjs-shim'),
-      require('karma-webpack')
+      require('karma-webpack'),
+      require('karma-sourcemap-loader')
     ]
   };
 
