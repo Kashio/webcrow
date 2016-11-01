@@ -25,12 +25,12 @@ export const tooltip = {
         .stop()
         .hide()
         .appendTo($body)
-        .fadeIn(TOOLTIP_DEFAULT_FADE_SPEED || binding.value.fade);
+        .fadeIn(binding.value.fade || TOOLTIP_DEFAULT_FADE_SPEED);
     });
     $el.mouseleave(() => {
       $tooltip
         .stop()
-        .fadeOut(TOOLTIP_DEFAULT_FADE_SPEED || binding.value.fade, () => {
+        .fadeOut(binding.value.fade || TOOLTIP_DEFAULT_FADE_SPEED, () => {
           $tooltip.detach();
         });
     });
