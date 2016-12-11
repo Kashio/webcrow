@@ -36,7 +36,9 @@ describe('tooltip', () => {
     it('should have mouseenter and mouseleave event listeners with no fade provided', () => {
       const $body = $('body');
       const el = document.createElement('div');
-      const binding = {};
+      const binding = {
+        value: {}
+      };
       const $el = $(el);
 
       tooltip.inserted(el, binding);
