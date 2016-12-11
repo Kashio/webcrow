@@ -1,73 +1,34 @@
 'use strict';
-var dataProvider = require('../models/project.js');
-/**
- * Operations on /project
- */
-module.exports = {
-    /**
-     * summary: Create porject
-     * description: 
-     * parameters: project
-     * produces: 
-     * responses: 201, default
-     */
-    post: function (req, res, next) {
-        /**
-         * Get the data for response 201
-         * For response `default` status 200 is used.
-         */
-        var status = 201;
-        var provider = dataProvider['post']['201'];
-        provider(req, res, function (err, data) {
-            if (err) {
-                next(err);
-                return;
-            }
-            res.status(status).send(data && data.responses);
-        });
-    },
-    /**
-     * summary: Update porject name
-     * description: 
-     * parameters: id, name
-     * produces: 
-     * responses: 204, default
-     */
-    put: function (req, res, next) {
-        /**
-         * Get the data for response 204
-         * For response `default` status 200 is used.
-         */
-        var status = 204;
-        var provider = dataProvider['put']['204'];
-        provider(req, res, function (err, data) {
-            if (err) {
-                next(err);
-                return;
-            }
-            res.status(status).send(data && data.responses);
-        });
-    },
-    /**
-     * summary: Delete project
-     * description: 
-     * parameters: projectId
-     * produces: 
-     * responses: 204, default
-     */
-    delete: function (req, res, next) {
-        /**
-         * Get the data for response 204
-         * For response `default` status 200 is used.
-         */
-        var status = 204;
-        var provider = dataProvider['delete']['204'];
-        provider(req, res, function (err, data) {
-            if (err) {
-                next(err);
-                return;
-            }
-            res.status(status).send(data && data.responses);
-        });
-    }
+
+import util from 'util';
+import dataProvider from '../models/project.js';
+
+export default {
+  post: (req, res, next) => {
+    dataProvider.create(req.body, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      res.status('201').send(util.format('project %s was created successfully', req.body.id));
+    });
+  },
+  put: (req, res, next) => {
+    dataProvider.rename(req.body.projectId, req.body.name, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      res.status('204').send(util.format('project %s was renamed to %s successfully', req.body.projectId, req.body.name));
+    });
+  },
+  delete: (req, res, next) => {
+    dataProvider.delete(req.body.projectId, (err) => {
+      if (err) {
+        next(err);
+        return;
+      }
+      res.status('204').send(util.format('project %s was deleted successfully', req.body.projectId));
+    });
+  }
 };
