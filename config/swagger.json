@@ -7,7 +7,6 @@
     },
     "host": "localhost:3000",
     "schemes": [
-        "https",
         "http"
     ],
     "basePath": "/v1",
@@ -42,7 +41,7 @@
         },
         "/project": {
             "post": {
-                "summary": "Create porject",
+                "summary": "Create project",
                 "consumes": [
                     "application/json"
                 ],
@@ -73,13 +72,13 @@
                 }
             },
             "put": {
-                "summary": "Update porject name",
+                "summary": "Update project name",
                 "consumes": [
                     "application/x-www-form-urlencoded"
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "projectId",
                         "in": "formData",
                         "description": "Project name",
                         "required": true,
