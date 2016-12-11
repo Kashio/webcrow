@@ -20,9 +20,9 @@ const customMatchers = {
 
 describe('tooltip', () => {
   describe('inserted()', () => {
-    const $TEST_TOOLTIP_CLASS = 'test_tooltip';
+    const TEST_TOOLTIP_CLASS = 'test_tooltip';
     const $tooltip = $(document.createElement('div'));
-    $tooltip.addClass($TEST_TOOLTIP_CLASS);
+    $tooltip.addClass(TEST_TOOLTIP_CLASS);
     const createTooltipSpy = jasmine.createSpy('createTooltipSpy').and.callFake(() => {
       return $tooltip;
     });
@@ -49,11 +49,11 @@ describe('tooltip', () => {
       $el.trigger('mouseenter');
 
       expect($tooltip.css('opacity')).toEqual('1');
-      expect($body.children('.' + $TEST_TOOLTIP_CLASS).length === 1).toBeTruthy();
+      expect($body.children('.' + TEST_TOOLTIP_CLASS).length === 1).toBeTruthy();
 
       $el.trigger('mouseleave');
 
-      expect($body.children('.' + $TEST_TOOLTIP_CLASS).length === 0).toBeTruthy();
+      expect($body.children('.' + TEST_TOOLTIP_CLASS).length === 0).toBeTruthy();
     });
     it('should have mouseenter and mouseleave event listeners with fade provided', () => {
       const $body = $('body');
@@ -75,11 +75,11 @@ describe('tooltip', () => {
       $el.trigger('mouseenter');
 
       expect($tooltip.css('opacity')).toEqual('1');
-      expect($body.children('.' + $TEST_TOOLTIP_CLASS).length === 1).toBeTruthy();
+      expect($body.children('.' + TEST_TOOLTIP_CLASS).length === 1).toBeTruthy();
 
       $el.trigger('mouseleave');
 
-      expect($body.children('.' + $TEST_TOOLTIP_CLASS).length === 0).toBeTruthy();
+      expect($body.children('.' + TEST_TOOLTIP_CLASS).length === 0).toBeTruthy();
     });
   });
   describe('createTooltip()', () => {
