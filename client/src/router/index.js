@@ -4,8 +4,8 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 import Layout from '../components/Layout/Layout.vue';
+import ProjectMenu from '../components/Projects/Menu/Menu.vue';
 
-const Foo = { render: h => h('div', 'Foo') };
 const Bar = { render: h => h('div', 'Bar') };
 
 export const router = new VueRouter({
@@ -20,7 +20,7 @@ export const router = new VueRouter({
           path: '/project',
           name: 'project',
           components: {
-            menu: Foo,
+            menu: ProjectMenu,
             main: Bar
           }
         }

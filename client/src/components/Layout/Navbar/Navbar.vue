@@ -72,6 +72,7 @@
       .menu {
         height: inherit;
         display: table-cell;
+        position: relative;
         padding: 10px 0;
         font-family: $font-stack;
       }
