@@ -1,5 +1,3 @@
-const conf = require('../../gulp.conf');
-
 module.exports = function (config) {
   const configuration = {
     basePath: '../',
@@ -16,11 +14,11 @@ module.exports = function (config) {
       'jasmine'
     ],
     files: [
-      'node_modules/es6-shim/es6-shim.js',
-      conf.path.client.src('app.spec.js')
+      '../node_modules/es6-shim/es6-shim.js',
+      'src/app.spec.js'
     ],
     preprocessors: {
-      [conf.path.client.src('app.spec.js')]: [
+      ['src/app.spec.js']: [
         'webpack',
         'sourcemap'
       ]

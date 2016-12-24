@@ -19,6 +19,7 @@ exports.paths = {
     src: './client/src',
     dist: './client/dist',
     tmp: './client/.tmp',
+    config: './client/conf',
     e2e: './client/e2e',
     tasks: './client/gulp_tasks'
   },
