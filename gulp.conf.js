@@ -15,22 +15,42 @@ const gutil = require('gulp-util');
  *  The main paths of your project handle these with care
  */
 exports.paths = {
-  src: './client/src',
-  dist: './client/dist',
-  tmp: './client/.tmp',
-  e2e: './client/e2e',
-  tasks: './client/gulp_tasks'
+  client: {
+    src: './client/src',
+    dist: './client/dist',
+    tmp: './client/.tmp',
+    e2e: './client/e2e',
+    tasks: './client/gulp_tasks'
+  },
+  server: {
+    root: './server',
+    bin: './server/bin',
+    config: './server/config',
+    models: './server/models',
+    routes: './server/routes',
+    views: './server/views',
+    dist: './server/dist',
+    test: './server/test',
+    tasks: './server/gulp_tasks'
+  }
 };
 
-exports.path = {};
-for (const pathName in exports.paths) {
-  if (exports.paths.hasOwnProperty(pathName)) {
-    exports.path[pathName] = function pathJoin() {
-      const pathValue = exports.paths[pathName];
-      const funcArgs = Array.prototype.slice.call(arguments);
-      const joinArgs = [pathValue].concat(funcArgs);
-      return path.join.apply(this, joinArgs);
-    };
+exports.path = {
+  client: {},
+  server: {}
+};
+for (const directory in exports.paths) {
+  if (exports.paths.hasOwnProperty(directory)) {
+    for(const pathName in exports.paths[directory]) {
+      if (exports.paths[directory].hasOwnProperty(pathName)) {
+        exports.path[directory][pathName] = function pathJoin() {
+          const pathValue = exports.paths[directory][pathName];
+          const funcArgs = Array.prototype.slice.call(arguments);
+          const joinArgs = [pathValue].concat(funcArgs);
+          return path.join.apply(this, joinArgs);
+        };
+      }
+    }
   }
 }
 

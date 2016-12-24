@@ -1,10 +1,10 @@
 const webpack = require('webpack');
-const conf = require('./gulp.conf');
+const conf = require('../../gulp.conf');
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const pkg = require('../package.json');
+const pkg = require('../../package.json');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -47,7 +47,7 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
-      template: conf.path.src('index.html')
+      template: conf.path.client.src('index.html')
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
@@ -60,11 +60,11 @@ module.exports = {
   ],
   postcss: () => [autoprefixer],
   output: {
-    path: path.join(process.cwd(), conf.paths.dist),
+    path: path.join(process.cwd(), conf.paths.client.dist),
     filename: '[name]-[hash].js'
   },
   entry: {
-    app: `./${conf.path.src('app')}`,
+    app: `./${conf.path.client.src('app')}`,
     // vendor: Object.keys(pkg.dependencies)
     vendor: [
       'vue',

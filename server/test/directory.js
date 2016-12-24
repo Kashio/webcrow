@@ -5,7 +5,7 @@ var BodyParser = require('body-parser');
 var Swaggerize = require('swaggerize-express');
 var Path = require('path');
 var Request = require('supertest');
-var Mockgen = require('../models/mockgen.js');
+var Mockgen = require('./mockgen.js');
 var Parser = require('swagger-parser');
 /**
  * Test for /directory

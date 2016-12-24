@@ -1,11 +1,11 @@
-const conf = require('./gulp.conf');
+const conf = require('../../gulp.conf');
 
 module.exports = function () {
   return {
     server: {
       baseDir: [
-        conf.paths.tmp,
-        conf.paths.src
+        conf.paths.client.tmp,
+        conf.paths.client.src
       ]
     },
     open: false

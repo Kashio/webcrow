@@ -1,4 +1,4 @@
-const conf = require('./gulp.conf');
+const conf = require('../../gulp.conf');
 
 module.exports = function (config) {
   const configuration = {
@@ -17,10 +17,10 @@ module.exports = function (config) {
     ],
     files: [
       'node_modules/es6-shim/es6-shim.js',
-      conf.path.src('app.spec.js')
+      conf.path.client.src('app.spec.js')
     ],
     preprocessors: {
-      [conf.path.src('app.spec.js')]: [
+      [conf.path.client.src('app.spec.js')]: [
         'webpack',
         'sourcemap'
       ]
@@ -30,7 +30,7 @@ module.exports = function (config) {
       type: 'html',
       dir: 'coverage/'
     },
-    webpack: require('./webpack-test.conf'),
+    webpack: require('./webpack-test.conf.js'),
     webpackMiddleware: {
       noInfo: true
     },

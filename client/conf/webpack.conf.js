@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const conf = require('./gulp.conf');
+const conf = require('../../gulp.conf');
 const path = require('path');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -46,7 +46,7 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
-      template: conf.path.src('index.html')
+      template: conf.path.client.src('index.html')
     }),
     new ExtractTextPlugin("style.css"),
   ],
@@ -64,8 +64,8 @@ module.exports = {
   debug: true,
   devtool: 'source-map',
   output: {
-    path: path.join(process.cwd(), conf.paths.tmp),
+    path: path.join(process.cwd(), conf.paths.client.tmp),
     filename: 'app.js'
   },
-  entry: `./${conf.path.src('app')}`
+  entry: `./${conf.path.client.src('app')}`
 };

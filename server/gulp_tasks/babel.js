@@ -1,25 +1,33 @@
 const path = require('path');
 
 const gulp = require('gulp');
-const del = require('del');
-const filter = require('gulp-filter');
+const babel = require('gulp-babel');
+const server = require('gulp-express');
 
 const conf = require('../../gulp.conf');
 
-gulp.task('clean', clean);
-gulp.task('other', other);
+gulp.task('server:dist', gulp.series(babelTranspile));
+gulp.task('server:watch', gulp.series(babelTranspile, startServer));
 
-function clean() {
-  return del([conf.paths.dist, conf.paths.tmp]);
+function babelTranspile() {
+  return gulp.src([
+    conf.path.server.root('app.js'),
+    conf.path.server.bin('www'),
+    conf.path.server.models('/**/*'),
+    conf.path.server.routes('/**/*'),
+    conf.path.server.test('/**/*')
+  ], {base: conf.paths.server.root})
+    .pipe(babel())
+    .pipe(gulp.dest(conf.paths.server.dist));
 }
 
-function other() {
-  const fileFilter = filter(file => file.stat.isFile());
-
-  return gulp.src([
-    path.join(conf.paths.src, '/**/*'),
-    path.join(`!${conf.paths.src}`, '/**/*.{scss,js,html}')
-  ])
-    .pipe(fileFilter)
-    .pipe(gulp.dest(conf.paths.dist));
+function startServer() {
+  server.run([conf.path.server.dist('/bin/www')]);
+  gulp.watch([
+    conf.path.server.root('/**/*'),
+    `!${conf.path.server.root('/dist')}`
+  ], () => {
+    babelTranspile();
+    server.notify();
+  });
 }
