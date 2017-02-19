@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import './css/index.scss';
-// import './directives';
+
 import { router } from './router';
 import { store } from './store';
 import './api';

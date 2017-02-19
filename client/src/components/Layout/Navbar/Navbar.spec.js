@@ -1,7 +1,11 @@
 import Vue from 'vue';
 
-import '../../../directives';
 import { router } from '../../../router';
+
+import { VueTooltip } from '@kashio/vue-tooltip';
+import '@kashio/vue-tooltip/dist/index.css';
+
+Vue.use(VueTooltip);
 
 import Navbar from './Navbar.vue';
 
@@ -31,7 +35,7 @@ describe('Navbar', () => {
     });
   });
   it('should render correctly', () => {
-    const injector = require('!!vue?inject!./Navbar.vue');
+    const injector = require('!!vue-loader?inject!./Navbar.vue');
     const MockedComponent = injector({
       '../../../services/links': {
         links: [

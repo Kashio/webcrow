@@ -15,7 +15,7 @@ describe('Header', () => {
     });
   });
   it('should render correctly', () => {
-    const injector = require('!!vue?inject!./Header.vue');
+    const injector = require('!!vue-loader?inject!./Header.vue');
     const MockedComponent = injector({
       '../../../services/brand': {
         name: 'Test',

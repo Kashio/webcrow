@@ -10,7 +10,7 @@ describe('Layout', () => {
   it('should be named Layout', () => {
     expect(Layout.name).toEqual('Layout');
   });
-  xit('should have correct default components', () => {
+  it('should have correct default components', () => {
     expect(Layout.components).toEqual({
       'header-component': Header,
       'navbar-component': Navbar

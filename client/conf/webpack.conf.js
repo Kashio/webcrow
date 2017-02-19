@@ -8,64 +8,71 @@ const autoprefixer = require('autoprefixer');
 
 module.exports = {
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'eslint'
-      }
-    ],
-    loaders: [
+        enforce: 'pre',
+        use: 'eslint-loader'
+      },
       {
         test: /.json$/,
-        loader: 'json'
+        use: 'json-loader'
       },
       {
         test: /\.(woff2?|eot|ttf|png|gif|jpe?g|svg)$/i,
-        loader: 'url?limit=8192',
+        use: 'url-loader?limit=8192'
       },
       {
-        test: /\.(css|scss)$/,
-        loaders: ExtractTextPlugin.extract({
-          fallbackLoader: 'style',
-          loader: 'css!sass!postcss'
+        test: /\.s?css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader', 'postcss-loader']
         })
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel'
+        use: 'babel-loader'
       },
       {
         test: /.vue$/,
-        loader: 'vue'
+        use: {
+          loader: 'vue-loader',
+          options: {
+            postcss: [
+              autoprefixer({
+                browsers: ['last 2 versions']
+              })
+            ],
+            loaders: {
+              sass: ExtractTextPlugin.extract({
+                use: ['css-loader', 'sass-loader']
+              })
+            }
+          }
+        }
       }
     ]
   },
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new HtmlWebpackPlugin({
-      template: conf.path.client.src('index.html')
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      debug: true,
+      options: {
+        postcss: [autoprefixer]
+      }
     }),
-    new ExtractTextPlugin("style.css"),
+    new HtmlWebpackPlugin({
+      template: 'index.html'
+    }),
+    new ExtractTextPlugin('style.css')
   ],
-  vue: {
-    postcss: [
-      autoprefixer({
-        browsers: ['last 2 versions']
-      })
-    ],
-    loaders: {
-      sass: ExtractTextPlugin.extract("css!sass")
-    }
-  },
-  postcss: () => [autoprefixer],
-  debug: true,
   devtool: 'source-map',
+  context: path.join(process.cwd(), conf.paths.client.src),
   output: {
     path: path.join(process.cwd(), conf.paths.client.tmp),
     filename: 'app.js'
   },
-  entry: `./${conf.path.client.src('app')}`
+  entry: './app.js'
 };
