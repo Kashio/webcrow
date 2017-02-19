@@ -60,8 +60,9 @@
 </script>
 
 <style lang="sass" rel="stylesheet/scss" scoped>
-  $input-border-color: #c9c9c9;
-  $input-border-color-focus: #969696;
+  $input-border-color: #969696;
+  $input-border-color-focus: #c9c9c9;
+  $new-entry-button-font-color: #c9c9c9;
 
   .menu-wrapper {
     position: absolute;
@@ -71,13 +72,16 @@
     right: 10px;
   }
   .fa-plus {
+    &:hover {
+      color: $new-entry-button-font-color;
+    }
     float: left;
     line-height: 1.65;
   }
   .new-entry-input {
     width: 70%;
     margin-left: 10px;
-    color: inherit;
+    color: white;
     background-color: inherit;
     height: 0;
     outline: none;
