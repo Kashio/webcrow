@@ -40,19 +40,17 @@
               .create({id: this.newEntry})
               .then((response) => this.$toast({
                 message: response.body,
-                fade: 400,
-                time: 3000,
-                borderRadius: 3,
+                time: 5000,
+                borderRadius: 7,
                 color: 'white',
-                backgroundColor: 'green'
+                backgroundColor: '#34b054'
               }))
               .catch((error) => this.$toast({
                 message: error.body,
-                fade: 400,
-                time: 3000,
-                borderRadius: 3,
+                time: 5000,
+                borderRadius: 7,
                 color: 'white',
-                backgroundColor: 'red'
+                backgroundColor: '#b03434'
               }));
         }
     }

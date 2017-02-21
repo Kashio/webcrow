@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@kashio/vue-toast": "^1.0.4",
     "@kashio/vue-tooltip": "^1.0.3",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
