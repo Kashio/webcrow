@@ -6,10 +6,10 @@ import dataProvider from '../models/project.js';
 const post = (req, res, next) => {
   dataProvider.create(req.body, (err) => {
     if (err) {
-      next(err);
-      return;
+      res.status('409').send(err.message);
+    } else {
+      res.status('201').send(util.format('project %s was created successfully', req.body.id));
     }
-    res.status('201').send(util.format('project %s was created successfully', req.body.id));
   });
 };
 

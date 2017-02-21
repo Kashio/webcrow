@@ -2,12 +2,24 @@
 
 import fs from 'fs';
 import path from 'path';
-import mkdirp from 'mkdirp';
-import rmdir from 'rmdir';
+import util from 'util';
+import fsp from 'fs-promise';
 
 export default {
   create: (project, done) => {
-    mkdirp(path.join(process.env.WEBCROW_HOME, project.id), done);
+    const directory = path.join(process.env.WEBCROW_HOME, project.id);
+    fsp.access(directory)
+      .then(() => {
+        done({
+          message: util.format('project %s already exists', project.id)
+        });
+      })
+      .catch((err) => {
+        fsp.ensureDir(directory)
+          .then(() => {
+            done();
+          });
+      });
   },
   rename: (projectId, name, done) => {
     fs.rename(path.join(process.env.WEBCROW_HOME, projectId),
