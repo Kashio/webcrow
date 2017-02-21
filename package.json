@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@kashio/vue-toast": "^1.0.4",
+    "@kashio/vue-toast": "^1.0.7",
     "@kashio/vue-tooltip": "^1.0.3",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
@@ -8,6 +8,7 @@
     "debug": "^2.6.0",
     "express": "^4.14.0",
     "fs-promise": "^2.0.0",
+    "fspvr": "^1.0.7",
     "jquery": "^3.1.1",
     "morgan": "^1.7.0",
     "pug": "^2.0.0-beta6",

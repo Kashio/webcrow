@@ -41,14 +41,16 @@
               .then((response) => this.$toast({
                 message: response.body,
                 time: 5000,
-                borderRadius: 7,
+                borderRadius: 3,
+                fixedWidth: 300,
                 color: 'white',
                 backgroundColor: '#34b054'
               }))
               .catch((error) => this.$toast({
                 message: error.body,
                 time: 5000,
-                borderRadius: 7,
+                borderRadius: 3,
+                fixedWidth: 300,
                 color: 'white',
                 backgroundColor: '#b03434'
               }));
