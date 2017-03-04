@@ -15,6 +15,7 @@ function babelTranspile() {
     conf.path.server.bin('www'),
     conf.path.server.models('/**/*'),
     conf.path.server.routes('/**/*'),
+    conf.path.server.utils('/**/*'),
     conf.path.server.test('/**/*')
   ], {base: conf.paths.server.root})
     .pipe(babel())

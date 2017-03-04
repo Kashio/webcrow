@@ -30,6 +30,7 @@ exports.paths = {
     models: './server/models',
     routes: './server/routes',
     views: './server/views',
+    utils: './server/utils',
     dist: './server/dist',
     test: './server/test',
     tasks: './server/gulp_tasks'
