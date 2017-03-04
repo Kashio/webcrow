@@ -3,5 +3,11 @@ export default instance => {
 
   const create = id => resource.save(id);
 
-  return { create };
+  const remove = id => {
+    return resource.delete({
+      projectId: id
+    });
+  };
+
+  return { create, remove };
 };
