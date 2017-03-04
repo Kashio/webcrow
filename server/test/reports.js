@@ -26,9 +26,9 @@ Test('/reports', function (t) {
         t.ok(api, 'Valid swagger api');
         /**
          * summary: Get reports
-         * description: 
-         * parameters: 
-         * produces: 
+         * description:
+         * parameters:
+         * produces:
          * responses: 200, default
          */
         t.test('test  get operation', function (t) {

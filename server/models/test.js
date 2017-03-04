@@ -7,7 +7,7 @@ module.exports = {
     /**
      * summary: Create test
      * description: 
-     * parameters: test
+     * parameters: entryPath, test
      * produces: 
      * responses: 201, 403, default
      * operationId: 
@@ -50,13 +50,13 @@ module.exports = {
     /**
      * summary: Update test name
      * description: 
-     * parameters: projectId, directoryId, fixtureId, testId, name
+     * parameters: entryPath, testId, name
      * produces: 
-     * responses: 204, 403, default
+     * responses: 200, 403, default
      * operationId: 
      */
     put: {
-        204: function (req, res, callback) {
+        200: function (req, res, callback) {
             /**
              * Using mock data generator module.
              * Replace this by actual data for the api.
@@ -64,7 +64,7 @@ module.exports = {
             Mockgen().responses({
                 path: '/test',
                 operation: 'put',
-                response: '204'
+                response: '200'
             }, callback);
         },
         403: function (req, res, callback) {
@@ -93,7 +93,7 @@ module.exports = {
     /**
      * summary: Delete test
      * description: 
-     * parameters: projectId, directoryId, fixtureId, testId
+     * parameters: entryPath, testId
      * produces: 
      * responses: 204, 403, default
      * operationId: 

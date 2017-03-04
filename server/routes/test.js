@@ -1,5 +1,5 @@
 'use strict';
-var dataProvider = require('../models/test.js');
+var dataProvider = require('./test.js');
 /**
  * Operations on /test
  */
@@ -7,7 +7,7 @@ module.exports = {
     /**
      * summary: Create test
      * description: 
-     * parameters: test
+     * parameters: entryPath, test
      * produces: 
      * responses: 201, 403, default
      */
@@ -29,17 +29,17 @@ module.exports = {
     /**
      * summary: Update test name
      * description: 
-     * parameters: projectId, directoryId, fixtureId, testId, name
+     * parameters: entryPath, testId, name
      * produces: 
-     * responses: 204, 403, default
+     * responses: 200, 403, default
      */
     put: function (req, res, next) {
         /**
-         * Get the data for response 204
+         * Get the data for response 200
          * For response `default` status 200 is used.
          */
-        var status = 204;
-        var provider = dataProvider['put']['204'];
+        var status = 200;
+        var provider = dataProvider['put']['200'];
         provider(req, res, function (err, data) {
             if (err) {
                 next(err);
@@ -51,7 +51,7 @@ module.exports = {
     /**
      * summary: Delete test
      * description: 
-     * parameters: projectId, directoryId, fixtureId, testId
+     * parameters: entryPath, testId
      * produces: 
      * responses: 204, 403, default
      */

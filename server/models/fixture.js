@@ -50,13 +50,13 @@ module.exports = {
     /**
      * summary: Update fixture details
      * description: 
-     * parameters: projectId, directoryId, fixtureId, name, page, username, password
+     * parameters: entryPath, name, page, username, password
      * produces: 
-     * responses: 204, 403, default
+     * responses: 200, 403, default
      * operationId: 
      */
     put: {
-        204: function (req, res, callback) {
+        200: function (req, res, callback) {
             /**
              * Using mock data generator module.
              * Replace this by actual data for the api.
@@ -64,7 +64,7 @@ module.exports = {
             Mockgen().responses({
                 path: '/fixture',
                 operation: 'put',
-                response: '204'
+                response: '200'
             }, callback);
         },
         403: function (req, res, callback) {
@@ -86,49 +86,6 @@ module.exports = {
             Mockgen().responses({
                 path: '/fixture',
                 operation: 'put',
-                response: 'default'
-            }, callback);
-        }
-    },
-    /**
-     * summary: Delete fixture
-     * description: 
-     * parameters: projectId, directoryId, fixtureId
-     * produces: 
-     * responses: 204, 403, default
-     * operationId: 
-     */
-    delete: {
-        204: function (req, res, callback) {
-            /**
-             * Using mock data generator module.
-             * Replace this by actual data for the api.
-             */
-            Mockgen().responses({
-                path: '/fixture',
-                operation: 'delete',
-                response: '204'
-            }, callback);
-        },
-        403: function (req, res, callback) {
-            /**
-             * Using mock data generator module.
-             * Replace this by actual data for the api.
-             */
-            Mockgen().responses({
-                path: '/fixture',
-                operation: 'delete',
-                response: '403'
-            }, callback);
-        },
-        default: function (req, res, callback) {
-            /**
-             * Using mock data generator module.
-             * Replace this by actual data for the api.
-             */
-            Mockgen().responses({
-                path: '/fixture',
-                operation: 'delete',
                 response: 'default'
             }, callback);
         }

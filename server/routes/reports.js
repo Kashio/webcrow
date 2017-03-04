@@ -1,5 +1,5 @@
 'use strict';
-var dataProvider = require('../models/reports.js');
+var dataProvider = require('./reports.js');
 /**
  * Operations on /reports
  */

@@ -26,7 +26,7 @@ Test('/report', function (t) {
         t.ok(api, 'Valid swagger api');
         /**
          * summary: Get report
-         * description: 
+         * description:
          * parameters: id
          * produces: application/json
          * responses: 200, default
@@ -75,9 +75,9 @@ Test('/report', function (t) {
             });
         });/**
          * summary: Delete report
-         * description: 
+         * description:
          * parameters: id
-         * produces: 
+         * produces:
          * responses: 204, 403, default
          */
         t.test('test  delete operation', function (t) {

@@ -26,7 +26,7 @@ Test('/record', function (t) {
         t.ok(api, 'Valid swagger api');
         /**
          * summary: Get page for recording
-         * description: 
+         * description:
          * parameters: page
          * produces: text/html
          * responses: 200, default

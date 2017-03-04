@@ -26,7 +26,7 @@ Test('/report/export', function (t) {
         t.ok(api, 'Valid swagger api');
         /**
          * summary: Export report to format
-         * description: 
+         * description:
          * parameters: id, format
          * produces: application/octet-stream
          * responses: 200, 403, default

@@ -26,8 +26,8 @@ Test('/fixture/code', function (t) {
         t.ok(api, 'Valid swagger api');
         /**
          * summary: Get fixture code
-         * description: 
-         * parameters: projectId, directoryId, fixtureId
+         * description:
+         * parameters: entryPath
          * produces: text/javascript
          * responses: 200, 403, default
          */
@@ -75,10 +75,10 @@ Test('/fixture/code', function (t) {
             });
         });/**
          * summary: Update fixture code
-         * description: 
-         * parameters: projectId, directoryId, fixtureId, code
-         * produces: 
-         * responses: 204, 403, default
+         * description:
+         * parameters: entryPath, code
+         * produces:
+         * responses: 200, 403, default
          */
         t.test('test  put operation', function (t) {
             Mockgen().requests({
@@ -110,7 +110,7 @@ Test('/fixture/code', function (t) {
                 }
                 request.end(function (err, res) {
                     t.error(err, 'No error');
-                    t.ok(res.statusCode === 204, 'Ok response status');
+                    t.ok(res.statusCode === 200, 'Ok response status');
                     t.end();
                 });
             });

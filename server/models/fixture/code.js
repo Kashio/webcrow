@@ -7,7 +7,7 @@ module.exports = {
     /**
      * summary: Get fixture code
      * description: 
-     * parameters: projectId, directoryId, fixtureId
+     * parameters: entryPath
      * produces: text/javascript
      * responses: 200, 403, default
      * operationId: 
@@ -50,13 +50,13 @@ module.exports = {
     /**
      * summary: Update fixture code
      * description: 
-     * parameters: projectId, directoryId, fixtureId, code
+     * parameters: entryPath, code
      * produces: 
-     * responses: 204, 403, default
+     * responses: 200, 403, default
      * operationId: 
      */
     put: {
-        204: function (req, res, callback) {
+        200: function (req, res, callback) {
             /**
              * Using mock data generator module.
              * Replace this by actual data for the api.
@@ -64,7 +64,7 @@ module.exports = {
             Mockgen().responses({
                 path: '/fixture/code',
                 operation: 'put',
-                response: '204'
+                response: '200'
             }, callback);
         },
         403: function (req, res, callback) {

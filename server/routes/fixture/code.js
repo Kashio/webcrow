@@ -1,5 +1,5 @@
 'use strict';
-var dataProvider = require('../../models/fixture/code.js');
+var dataProvider = require('.././fixture/code.js');
 /**
  * Operations on /fixture/code
  */
@@ -7,7 +7,7 @@ module.exports = {
     /**
      * summary: Get fixture code
      * description: 
-     * parameters: projectId, directoryId, fixtureId
+     * parameters: entryPath
      * produces: text/javascript
      * responses: 200, 403, default
      */
@@ -29,17 +29,17 @@ module.exports = {
     /**
      * summary: Update fixture code
      * description: 
-     * parameters: projectId, directoryId, fixtureId, code
+     * parameters: entryPath, code
      * produces: 
-     * responses: 204, 403, default
+     * responses: 200, 403, default
      */
     put: function (req, res, next) {
         /**
-         * Get the data for response 204
+         * Get the data for response 200
          * For response `default` status 200 is used.
          */
-        var status = 204;
-        var provider = dataProvider['put']['204'];
+        var status = 200;
+        var provider = dataProvider['put']['200'];
         provider(req, res, function (err, data) {
             if (err) {
                 next(err);

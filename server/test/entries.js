@@ -5,13 +5,13 @@ var BodyParser = require('body-parser');
 var Swaggerize = require('swaggerize-express');
 var Path = require('path');
 var Request = require('supertest');
-var Mockgen = require('.././mockgen.js');
+var Mockgen = require('./mockgen.js');
 var Parser = require('swagger-parser');
 /**
- * Test for /directory/entries
+ * Test for /entries
  */
-Test('/directory/entries', function (t) {
-    var apiPath = Path.resolve(__dirname, '../../config/swagger.json');
+Test('/entries', function (t) {
+    var apiPath = Path.resolve(__dirname, '../config/swagger.json');
     var App = Express();
     App.use(BodyParser.json());
     App.use(BodyParser.urlencoded({
@@ -19,21 +19,21 @@ Test('/directory/entries', function (t) {
     }));
     App.use(Swaggerize({
         api: apiPath,
-        handlers: Path.resolve(__dirname, '../../routes')
+        handlers: Path.resolve(__dirname, '../routes')
     }));
     Parser.validate(apiPath, function (err, api) {
         t.error(err, 'No parse error');
         t.ok(api, 'Valid swagger api');
         /**
-         * summary: Get directory entries
-         * description: 
-         * parameters: 
-         * produces: 
+         * summary: Get entries
+         * description:
+         * parameters: entryPath
+         * produces:
          * responses: 200, default
          */
         t.test('test  get operation', function (t) {
             Mockgen().requests({
-                path: '/directory/entries',
+                path: '/entries',
                 operation: 'get'
             }, function (err, mock) {
                 var request;
@@ -63,7 +63,7 @@ Test('/directory/entries', function (t) {
                     t.error(err, 'No error');
                     t.ok(res.statusCode === 200, 'Ok response status');
                     var Validator = require('is-my-json-valid');
-                    var validate = Validator(api.paths['/directory/entries']['get']['responses']['200']['schema']);
+                    var validate = Validator(api.paths['/entries']['get']['responses']['200']['schema']);
                     var response = res.body;
                     if (Object.keys(response).length <= 0) {
                         response = res.text;

@@ -26,9 +26,9 @@ Test('/test', function (t) {
         t.ok(api, 'Valid swagger api');
         /**
          * summary: Create test
-         * description: 
-         * parameters: test
-         * produces: 
+         * description:
+         * parameters: entryPath, test
+         * produces:
          * responses: 201, 403, default
          */
         t.test('test  post operation', function (t) {
@@ -67,10 +67,10 @@ Test('/test', function (t) {
             });
         });/**
          * summary: Update test name
-         * description: 
-         * parameters: projectId, directoryId, fixtureId, testId, name
-         * produces: 
-         * responses: 204, 403, default
+         * description:
+         * parameters: entryPath, testId, name
+         * produces:
+         * responses: 200, 403, default
          */
         t.test('test  put operation', function (t) {
             Mockgen().requests({
@@ -102,15 +102,15 @@ Test('/test', function (t) {
                 }
                 request.end(function (err, res) {
                     t.error(err, 'No error');
-                    t.ok(res.statusCode === 204, 'Ok response status');
+                    t.ok(res.statusCode === 200, 'Ok response status');
                     t.end();
                 });
             });
         });/**
          * summary: Delete test
-         * description: 
-         * parameters: projectId, directoryId, fixtureId, testId
-         * produces: 
+         * description:
+         * parameters: entryPath, testId
+         * produces:
          * responses: 204, 403, default
          */
         t.test('test  delete operation', function (t) {

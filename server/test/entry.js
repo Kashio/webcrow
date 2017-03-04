@@ -8,9 +8,9 @@ var Request = require('supertest');
 var Mockgen = require('./mockgen.js');
 var Parser = require('swagger-parser');
 /**
- * Test for /directory
+ * Test for /entry
  */
-Test('/directory', function (t) {
+Test('/entry', function (t) {
     var apiPath = Path.resolve(__dirname, '../config/swagger.json');
     var App = Express();
     App.use(BodyParser.json());
@@ -25,15 +25,15 @@ Test('/directory', function (t) {
         t.error(err, 'No parse error');
         t.ok(api, 'Valid swagger api');
         /**
-         * summary: Create directory
-         * description: 
-         * parameters: directory
-         * produces: 
-         * responses: 201, 403, default
+         * summary: Create entry
+         * description:
+         * parameters: entry
+         * produces:
+         * responses: 201, default
          */
         t.test('test  post operation', function (t) {
             Mockgen().requests({
-                path: '/directory',
+                path: '/entry',
                 operation: 'post'
             }, function (err, mock) {
                 var request;
@@ -66,15 +66,15 @@ Test('/directory', function (t) {
                 });
             });
         });/**
-         * summary: Update directory name
-         * description: 
-         * parameters: projectId, directoryId, name
-         * produces: 
-         * responses: 204, 403, default
+         * summary: Update entry name
+         * description:
+         * parameters: entryPath, name
+         * produces:
+         * responses: 200, default
          */
         t.test('test  put operation', function (t) {
             Mockgen().requests({
-                path: '/directory',
+                path: '/entry',
                 operation: 'put'
             }, function (err, mock) {
                 var request;
@@ -102,20 +102,20 @@ Test('/directory', function (t) {
                 }
                 request.end(function (err, res) {
                     t.error(err, 'No error');
-                    t.ok(res.statusCode === 204, 'Ok response status');
+                    t.ok(res.statusCode === 200, 'Ok response status');
                     t.end();
                 });
             });
         });/**
-         * summary: Delete directory
-         * description: 
-         * parameters: projectId, directoryId
-         * produces: 
-         * responses: 204, 403, default
+         * summary: Delete entry
+         * description:
+         * parameters: entryPath
+         * produces:
+         * responses: 200, default
          */
         t.test('test  delete operation', function (t) {
             Mockgen().requests({
-                path: '/directory',
+                path: '/entry',
                 operation: 'delete'
             }, function (err, mock) {
                 var request;
@@ -143,7 +143,7 @@ Test('/directory', function (t) {
                 }
                 request.end(function (err, res) {
                     t.error(err, 'No error');
-                    t.ok(res.statusCode === 204, 'Ok response status');
+                    t.ok(res.statusCode === 200, 'Ok response status');
                     t.end();
                 });
             });

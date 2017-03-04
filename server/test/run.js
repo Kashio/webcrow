@@ -26,9 +26,9 @@ Test('/run', function (t) {
         t.ok(api, 'Valid swagger api');
         /**
          * summary: Run tests
-         * description: 
+         * description:
          * parameters: tests
-         * produces: 
+         * produces:
          * responses: 204, 403, default
          */
         t.test('test  post operation', function (t) {
