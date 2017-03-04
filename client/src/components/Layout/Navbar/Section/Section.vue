@@ -43,7 +43,6 @@
         list-style-type: none;
       }
       color: $menu-section-body-color;
-      opacity: .3;
       font-size: .8rem;
     }
     font: inherit;
