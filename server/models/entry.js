@@ -7,12 +7,14 @@ import fsp from 'fs-promise';
 import fspvr from 'fspvr';
 import utils from '../utils';
 
+const OUTSIDE_WEBCROW_HOME_FOLDER_MESSAGE = util.format('entry needs to be inside %s', process.env.WEBCROW_HOME);
+
 export default {
   create: (entry, done) => {
     const directory = path.join(process.env.WEBCROW_HOME, entry.path);
     if (!utils.isEntryInsideWebCrowHome(directory)) {
       done({
-        message: util.format('entry needs to be inside %s', process.env.WEBCROW_HOME)
+        message: OUTSIDE_WEBCROW_HOME_FOLDER_MESSAGE
       });
     } else {
       if (!fspvr.isPathValid(entry.path, true)) {
@@ -39,7 +41,7 @@ export default {
     const directory = path.join(process.env.WEBCROW_HOME, entryPath);
     if (!utils.isEntryInsideWebCrowHome(directory)) {
       done({
-        message: util.format('entry needs to be inside %s', process.env.WEBCROW_HOME)
+        message: OUTSIDE_WEBCROW_HOME_FOLDER_MESSAGE
       });
     } else {
       if (!fspvr.isSegmentValid(name, true)) {
@@ -47,7 +49,7 @@ export default {
           message: util.format('%s is not a valid entry name', name)
         });
       } else {
-        const newEntryPath = entryPath.replace(new RegExp('[^\\' + path.sep + ']$'), name);
+        const newEntryPath = directory.replace(new RegExp('[^\\' + path.sep + ']+$'), name);
         fs.rename(directory, newEntryPath, done);
       }
     }
@@ -56,7 +58,7 @@ export default {
     const directory = path.join(process.env.WEBCROW_HOME, entryPath);
     if (!utils.isEntryInsideWebCrowHome(directory)) {
       done({
-        message: util.format('entry needs to be inside %s', process.env.WEBCROW_HOME)
+        message: OUTSIDE_WEBCROW_HOME_FOLDER_MESSAGE
       });
     } else {
       fsp.remove(directory)
