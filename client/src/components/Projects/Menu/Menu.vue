@@ -10,9 +10,13 @@
       </item-component>
     </section-component>
     <section-component header="Entries" id="entries-section">
-      <item-component v-for="(entry, index) in entries">
-        <entry-component :entry="entry" :entry-index="index"></entry-component>
-      </item-component>
+      <vue-scroll-bar class="vue-scroll-bar">
+        <div class="vue-scroll-bar-content">
+          <item-component v-for="(entry, index) in entries">
+            <entry-component :entry="entry" :entry-index="index"></entry-component>
+          </item-component>
+        </div>
+      </vue-scroll-bar>
     </section-component>
   </div>
 </template>
@@ -26,9 +30,13 @@
   import EntryService from '../../../api/entry';
   import config from '../../../app.config';
 
+  import VueScrollBar from 'vue2-scrollbar';
+  import 'vue2-scrollbar/dist/style/vue2-scrollbar.css';
+
   export default {
     name: 'Menu',
     components: {
+      'vue-scroll-bar': VueScrollBar,
       'section-component': Section,
       'item-component': Item,
       'entry-component': Entry
@@ -48,9 +56,11 @@
       ])
     },
     methods: {
+      createEntry() {
+        this.$store.dispatch('createEntry', this);
+      },
       ...mapActions([
-      	'getEntries',
-        'createEntry',
+      	'getEntries'
       ])
     }
   };
@@ -102,4 +112,15 @@
   .new-entry-input:focus {
     border-bottom: solid 1px $input-border-color-focus;
   }
+
+  #entries-section {
+    .vue-scroll-bar {
+      background-color: inherit;
+      position: absolute;
+      top: 96px;
+      bottom: 0;
+      right: -10px;
+    }
+  }
 </style>
+
