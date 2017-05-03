@@ -1,13 +1,19 @@
 export default instance => {
-  const resource = instance.$resource('entry');
-
-  const create = path => resource.save(path);
-
-  const remove = entryPath => {
-    return resource.delete({
-      entryPath
-    });
+  const actions = {
+    put: {
+      method: 'PUT',
+      url: 'entry',
+      emulateJSON: true
+    }
   };
 
-  return { create, remove };
+  const resource = instance.$resource('entry', {}, actions);
+
+  const create = path => resource.save({ path });
+
+  const remove = entryPath => resource.delete({ entryPath });
+
+  const rename = (entryPath, name) => resource.put({ entryPath, name });
+
+  return { create, remove, rename };
 };
