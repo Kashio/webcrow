@@ -1,51 +1,63 @@
 <template>
   <div class="entry pointer">
-        <i class="fa fa-trash-o" @click="deleteEntry"></i>
-        <i class="fa fa-pencil" @click="toggleEditable"></i>
-        <div truncated-title>
-          <i class="fa fa-folder-o"></i>
-          <span class="project-name" :contenteditable="entry.isEditable">{{ entry.name }}</span>
-        </div>
+    <i class="fa fa-trash-o" @click="deleteEntry"></i>
+    <i class="fa fa-pencil" @click="toggleEditable(entryIndex)"></i>
+    <i class="fa fa-folder-o"></i>
+    <input v-truncated-title class="project-name"
+          :readonly="!entry.isEditable"
+          v-focus-toggle="entry.isEditable"
+          @blur="renameEntry"
+          @keyup.enter="renameEntry"
+          :value="entry.name" @input="setEntryName"/>
   </div>
 </template>
 
 <script>
-  import EntryService from '../../../../api/entry';
-  import config from '../../../../app.config';
+  import { mapMutations } from 'vuex'
 
   export default {
     name: 'Entry',
     props: {
       entry: {
         validator: entry => {
-          return entry && entry.path && entry.isEditable;
+          return entry &&
+            entry.path !== undefined &&
+            entry.name !== undefined &&
+            entry.isEditable !== undefined;
         }
       },
       entryIndex: {
-      	type: Number,
+        type: Number,
         required: true
       }
     },
     methods: {
       deleteEntry() {
-        EntryService(this)
-          .remove(this.entry.name)
-          .then(response => {
-            this.$store.state.commit('remove', this.entryIndex);
-            this.$toast({
-              message: response.body,
-              ...config.toastSuccess
-            });
-          })
-          .catch(error =>
-            this.$toast({
-              message: error.body,
-              ...config.toastFailure
-          }));
+        this.$store.dispatch('deleteEntry', this);
       },
-      toggleEditable() {
-      	this.entry.isEditable = !this.entry.isEditable;
-      }
+      renameEntry(e) {
+        if (e.keyCode === 13) {
+          e.target.blur();
+        } else {
+          if (this.entry.name !== this.entry.path) {
+            if (this.entry.name.length > 0) {
+              this.$store.dispatch('renameEntry', this);
+            } else {
+              this.entry.name = this.entry.path;
+            }
+          }
+          this.toggleEditable(this.entryIndex);
+        }
+      },
+      setEntryName(e) {
+          this.$store.commit('SET_ENTRY_NAME', {
+            index: this.entryIndex,
+            name: e.target.value
+          });
+      },
+      ...mapMutations({
+        toggleEditable: 'TOGGLE_ENTRY_EDITABLE'
+      })
     }
   };
 </script>
@@ -69,8 +81,12 @@
       background-color: $project-hover-background-color;
       color: $project-hover-color;
     }
-    div {
-      width: 80%;
+    .project-name {
+      background-color: inherit;
+      color: inherit;
+      border: none;
+      outline: none;
+      width: 70%;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -90,7 +106,7 @@
     position: relative;
     width: 200px;
     left: -10px;
-    padding: 6px 0 6px 10px;
+    padding: 6px 0 6px 20px;
     white-space: nowrap;
   }
 </style>
