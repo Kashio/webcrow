@@ -70,7 +70,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Entry created successfully"
+            "description": "entry was created successfully"
           },
           "default": {
             "description": "Unexpected error",
@@ -106,7 +106,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Entry name updated successfully"
+            "description": "entry was renamed to successfully"
           },
           "default": {
             "description": "Unexpected error",
@@ -132,7 +132,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Entry deleted successfully"
+            "description": "entry was deleted successfully"
           },
           "default": {
             "description": "Unexpected error",
@@ -165,10 +165,10 @@
         ],
         "responses": {
           "201": {
-            "description": "Fixture created successfully"
+            "description": "fixture was created successfully"
           },
           "403": {
-            "description": "Directory must be inside the project folder"
+            "description": "directory must be inside the project folder"
           },
           "default": {
             "description": "Unexpected error",
@@ -186,7 +186,7 @@
         "parameters": [
           {
             "name": "entryPath",
-            "in": "query",
+            "in": "formData",
             "description": "Entry path",
             "required": true,
             "type": "string"
@@ -226,10 +226,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Fixture details updated successfully"
+            "description": "fixture details were updated successfully"
           },
           "403": {
-            "description": "Directory must be inside the project folder"
+            "description": "directory must be inside the project folder"
           },
           "default": {
             "description": "Unexpected error",
@@ -267,7 +267,7 @@
             }
           },
           "403": {
-            "description": "Directory must be inside the project folder"
+            "description": "directory must be inside the project folder"
           },
           "default": {
             "description": "Unexpected error",
@@ -285,7 +285,7 @@
         "parameters": [
           {
             "name": "entryPath",
-            "in": "query",
+            "in": "formData",
             "description": "Entry path",
             "required": true,
             "type": "string"
@@ -305,10 +305,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Fixture code updated successfully"
+            "description": "fixture code was updated successfully"
           },
           "403": {
-            "description": "Directory must be inside the project folder"
+            "description": "directory must be inside the project folder"
           },
           "default": {
             "description": "Unexpected error",
@@ -348,10 +348,10 @@
         ],
         "responses": {
           "201": {
-            "description": "Fixture code updated successfully"
+            "description": "fixture code was updated successfully"
           },
           "403": {
-            "description": "Directory must be inside the project folder"
+            "description": "directory must be inside the project folder"
           },
           "default": {
             "description": "Unexpected error",
@@ -369,7 +369,7 @@
         "parameters": [
           {
             "name": "entryPath",
-            "in": "query",
+            "in": "formData",
             "description": "Entry path",
             "required": true,
             "type": "string"
@@ -394,10 +394,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Test name updated successfully"
+            "description": "test name was updated successfully"
           },
           "403": {
-            "description": "Directory must be inside the project folder"
+            "description": "directory must be inside the project folder"
           },
           "default": {
             "description": "Unexpected error",
@@ -430,10 +430,10 @@
         ],
         "responses": {
           "204": {
-            "description": "Test deleted successfully"
+            "description": "test was deleted successfully"
           },
           "403": {
-            "description": "Directory must be inside the project folder"
+            "description": "directory must be inside the project folder"
           },
           "default": {
             "description": "Unexpected error",
@@ -465,7 +465,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Page ready for recording",
+            "description": "page is ready for recording",
             "schema": {
               "type": "string"
             }
@@ -506,10 +506,10 @@
         ],
         "responses": {
           "204": {
-            "description": "Test execution launched successfully"
+            "description": "test execution launched successfully"
           },
           "403": {
-            "description": "Directory must be inside the project folder"
+            "description": "directory must be inside the project folder"
           },
           "default": {
             "description": "Unexpected error",
@@ -594,10 +594,10 @@
         ],
         "responses": {
           "204": {
-            "description": "Report deleted successfully"
+            "description": "report was deleted successfully"
           },
           "403": {
-            "description": "Directory must be inside the project folder"
+            "description": "directory must be inside the project folder"
           },
           "default": {
             "description": "Unexpected error",
@@ -647,7 +647,7 @@
             }
           },
           "403": {
-            "description": "Directory must be inside the project folder"
+            "description": "directory must be inside the project folder"
           },
           "default": {
             "description": "Unexpected error",
