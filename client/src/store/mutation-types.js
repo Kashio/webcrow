@@ -1,3 +1,6 @@
 export const SET_ENTRIES = 'SET_ENTRIES';
 export const ADD_ENTRY = 'ADD_ENTRY';
 export const REMOVE_ENTRY = 'REMOVE_ENTRY';
+export const RENAME_ENTRY = 'RENAME_ENTRY';
+export const SET_ENTRY_NAME = 'SET_ENTRY_NAME';
+export const TOGGLE_ENTRY_EDITABLE = 'TOGGLE_ENTRY_EDITABLE';
