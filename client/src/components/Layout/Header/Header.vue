@@ -8,7 +8,8 @@
 </template>
 
 <script>
-  import { name, version } from '../../../services/brand';
+  import {name, version} from '../../../services/brand';
+
   export default {
     name: 'Header',
     data() {
@@ -20,7 +21,7 @@
   };
 </script>
 
-<style lang="sass" rel="stylesheet/scss" scoped>
+<style lang="scss" rel="stylesheet/scss" scoped>
   $font-stack: 'Open Sans', sans-serif;
   $primary-color: #2d5079;
   $border-color: #345b88;

@@ -1,12 +1,17 @@
-const webpack = require('webpack');
 const conf = require('../../gulp.conf');
 const path = require('path');
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const autoprefixer = require('autoprefixer');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+  mode: 'development',
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      '@': path.join(process.cwd(), conf.paths.client.src)
+    }
+  },
   module: {
     rules: [
       {
@@ -16,19 +21,19 @@ module.exports = {
         use: 'eslint-loader'
       },
       {
-        test: /.json$/,
-        use: 'json-loader'
-      },
-      {
         test: /\.(woff2?|eot|ttf|png|gif|jpe?g|svg)$/i,
-        use: 'url-loader?limit=8192'
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192
+            }
+          }
+        ]
       },
       {
         test: /\.s?css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader', 'postcss-loader']
-        })
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
       {
         test: /\.js$/,
@@ -36,19 +41,12 @@ module.exports = {
         use: 'babel-loader'
       },
       {
-        test: /.vue$/,
+        test: /\.vue$/,
         use: {
           loader: 'vue-loader',
           options: {
-            postcss: [
-              autoprefixer({
-                browsers: ['last 2 versions']
-              })
-            ],
             loaders: {
-              sass: ExtractTextPlugin.extract({
-                use: ['css-loader', 'sass-loader']
-              })
+              sass: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
             }
           }
         }
@@ -56,17 +54,13 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.LoaderOptionsPlugin({
-      debug: true,
-      options: {
-        postcss: [autoprefixer]
-      }
-    }),
     new HtmlWebpackPlugin({
       template: 'index.html'
     }),
-    new ExtractTextPlugin('style.css')
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css'
+    })
   ],
   devtool: 'source-map',
   context: path.join(process.cwd(), conf.paths.client.src),

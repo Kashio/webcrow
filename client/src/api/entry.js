@@ -9,11 +9,11 @@ export default instance => {
 
   const resource = instance.$resource('entry', {}, actions);
 
-  const create = path => resource.save({ path });
+  const create = path => resource.save({path});
 
-  const remove = entryPath => resource.delete({ entryPath });
+  const remove = entryPath => resource.delete({entryPath});
 
-  const rename = (entryPath, name) => resource.put({ entryPath, name });
+  const rename = (entryPath, name) => resource.put({entryPath, name});
 
-  return { create, remove, rename };
+  return {create, remove, rename};
 };

@@ -12,7 +12,7 @@
     <section-component header="Entries" id="entries-section">
       <vue-scroll-bar class="vue-scroll-bar">
         <div class="vue-scroll-bar-content">
-          <item-component v-for="(entry, index) in entries">
+          <item-component v-for="(entry, index) in entries" :key="index">
             <entry-component :entry="entry" :entry-index="index"></entry-component>
           </item-component>
         </div>
@@ -22,10 +22,10 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'
-  import Section from '../../Layout/Navbar/Section/Section.vue';
-  import Item from '../../Layout/Navbar/Section/Item/Item.vue';
-  import Entry from './Entry/Entry.vue';
+  import {mapGetters, mapActions} from 'vuex';
+  import Section from '../../Layout/Navbar/Section/Section';
+  import Item from '../../Layout/Navbar/Section/Item/Item';
+  import Entry from './Entry/Entry';
   import EntriesService from '../../../api/entries';
   import EntryService from '../../../api/entry';
   import config from '../../../app.config';
@@ -43,9 +43,9 @@
     },
     data() {
       return {
-      	path: '',
+        path: '',
         newEntry: ''
-      }
+      };
     },
     created() {
       this.getEntries(this);
@@ -60,13 +60,13 @@
         this.$store.dispatch('createEntry', this);
       },
       ...mapActions([
-      	'getEntries'
+        'getEntries'
       ])
     }
   };
 </script>
 
-<style lang="sass" rel="stylesheet/scss" scoped>
+<style lang="scss" rel="stylesheet/scss" scoped>
   $input-border-color: #969696;
   $input-border-color-focus: #c9c9c9;
   $new-entry-button-font-color: #c9c9c9;

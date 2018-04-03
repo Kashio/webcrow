@@ -1,27 +1,19 @@
-'use strict';
-
-import path from 'path';
-import util from 'util';
-import fsp from 'fs-promise';
-import utils from '../utils';
+const path = require('path');
+const Promise = require('promise');
+const fse = require('fs-extra');
+const utils = require('../utils');
 
 const TEST_FILE_SUFFIX = '.test.js';
 
-export default {
-  get: (entryPath, done) => {
+const get = entryPath => {
+  return new Promise((resolve, reject) => {
     const directory = path.join(process.env.WEBCROW_HOME, entryPath);
-    if (!utils.isEntryInsideWebCrowHome(directory)) {
-      done({
-        message: util.format('entry needs to be inside %s', process.env.WEBCROW_HOME)
-      });
-    } else {
-      fsp.readdir(directory)
+    if (utils.isEntryInsideWebCrowHome(directory)) {
+      fse.readdir(directory)
         .then(entries => {
           Promise.all(
             entries
-              .map(entry => {
-                return fsp.stat(path.join(directory, entry));
-              })
+              .map(entry => fse.stat(path.join(directory, entry)))
               .map(promise => promise.catch(err => console.error(err))))
             .then(stats => {
               const validEntries = [];
@@ -30,11 +22,17 @@ export default {
                   validEntries.push(entries[index]);
                 }
               });
-              done(null, validEntries);
+              resolve(validEntries);
             })
-            .catch(done);
+            .catch(reject);
         })
-        .catch(done);
+        .catch(reject);
+    } else {
+      reject(new Error(`entry needs to be inside ${process.env.WEBCROW_HOME}`));
     }
-  }
+  });
+};
+
+module.exports = {
+  get
 };

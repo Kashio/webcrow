@@ -1,7 +1,7 @@
 <template>
   <li class="menu-section-item">
     <slot></slot>
-    </li>
+  </li>
 </template>
 
 <script>
@@ -10,7 +10,7 @@
   };
 </script>
 
-<style lang="sass" rel="stylesheet/scss" scoped>
+<style lang="scss" rel="stylesheet/scss" scoped>
   .menu-section-item {
     margin-bottom: 5px;
   }

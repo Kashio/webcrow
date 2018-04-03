@@ -1,8 +1,8 @@
 import Vue from 'vue';
 
-import { router } from '../../../router';
+import {router} from '../../../router';
 
-import Header from './Header.vue';
+import Header from './Header';
 
 describe('Header', () => {
   it('should be named Header', () => {
@@ -15,7 +15,7 @@ describe('Header', () => {
     });
   });
   it('should render correctly', () => {
-    const injector = require('!!vue-loader?inject!./Header.vue');
+    const injector = require('!!vue-loader?inject!./Header');
     const MockedComponent = injector({
       '../../../services/brand': {
         name: 'Test',

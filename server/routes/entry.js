@@ -1,34 +1,37 @@
-'use strict';
+const dataProvider = require('../models/entry.js');
 
-import util from 'util';
-import dataProvider from '../models/entry.js';
-
-const post = (req, res, next) => {
-  dataProvider.create(req.body, (err) => {
-    if (err) {
-      res.status(409).send(err.message);
-    } else {
-      res.status(201).send(util.format('entry %s was created successfully', req.body.path));
-    }
-  });
+const post = (req, res) => {
+  dataProvider.create(req.body)
+    .then(() => {
+      res.status(201).send(`entry ${req.body.path} was created successfully`);
+    })
+    .catch(error => {
+      res.status(409).send(error.message);
+    });
 };
 
-const put = (req, res, next) => {
-  dataProvider.rename(req.body.entryPath, req.body.name, (err) => {
-    if (err) {
-      res.status(404).send(err.message);
-    }
-    res.status(200).send(util.format('entry %s was renamed to %s successfully', req.body.entryPath, req.body.name));
-  });
+const put = (req, res) => {
+  dataProvider.rename(req.body.entryPath, req.body.name)
+    .then(() => {
+      res.status(200).send(`entry ${req.body.entryPath} was renamed to ${req.body.name} successfully`);
+    })
+    .catch(error => {
+      res.status(404).send(error.message);
+    });
 };
 
-const remove = (req, res, next) => {
-  dataProvider.delete(req.query.entryPath, (err) => {
-    if (err) {
-      res.status(404).send(err.message);
-    }
-    res.status(200).send(util.format('entry %s was deleted successfully', req.query.entryPath));
-  });
+const remove = (req, res) => {
+  dataProvider.delete(req.query.entryPath)
+    .then(() => {
+      res.status(200).send(`entry ${req.query.entryPath} was deleted successfully`);
+    })
+    .catch(error => {
+      res.status(404).send(error.message);
+    });
 };
 
-export { post, put, remove as delete };
+module.exports = {
+  post,
+  put,
+  remove
+};

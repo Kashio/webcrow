@@ -3,5 +3,5 @@ export default instance => {
 
   const get = () => resource.get();
 
-  return { get };
+  return {get};
 };

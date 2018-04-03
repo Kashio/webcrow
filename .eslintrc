@@ -1,0 +1,20 @@
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "rules": {
+    "linebreak-style": 0
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jasmine": true,
+    "es6": true,
+    "phantomjs": true
+  },
+  "extends": [
+    "xo-space/esnext"
+  ],
+  "plugins": [
+    "html"
+  ]
+}

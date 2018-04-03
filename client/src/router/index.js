@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 import Layout from '../components/Layout/Layout.vue';
 import ProjectMenu from '../components/Projects/Menu/Menu.vue';
 
-const Bar = { render: h => h('div', 'Bar') };
+const Bar = {render: h => h('div', 'Bar')};
 
 export const router = new VueRouter({
   mode: 'history',

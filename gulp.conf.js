@@ -31,7 +31,6 @@ exports.paths = {
     routes: './server/routes',
     views: './server/views',
     utils: './server/utils',
-    dist: './server/dist',
     test: './server/test',
     tasks: './server/gulp_tasks'
   }
@@ -43,7 +42,7 @@ exports.path = {
 };
 for (const directory in exports.paths) {
   if (exports.paths.hasOwnProperty(directory)) {
-    for(const pathName in exports.paths[directory]) {
+    for (const pathName in exports.paths[directory]) {
       if (exports.paths[directory].hasOwnProperty(pathName)) {
         exports.path[directory][pathName] = function pathJoin() {
           const pathValue = exports.paths[directory][pathName];

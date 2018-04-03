@@ -1,12 +1,12 @@
 <template>
   <div class="app-layout">
-    <header-component></header-component>
+    <Header/>
     <div class="main"> <!-- IE9 support -->
       <div class="main-wrapper"> <!-- IE9 support -->
         <div class="main-body">
-          <navbar-component>
+          <Navbar>
             <router-view name="menu" slot="menu"></router-view>
-          </navbar-component>
+          </Navbar>
           <main>
             <router-view name="main"></router-view>
           </main>
@@ -17,19 +17,20 @@
 </template>
 
 <script>
-  import Header from './Header/Header.vue';
-  import Navbar from './Navbar/Navbar.vue';
+  import Header from './Header/Header';
+  import Navbar from './Navbar/Navbar';
+
   export default {
     name: 'Layout',
     components: {
-      'header-component': Header,
-      'navbar-component': Navbar
+      Header,
+      Navbar
     }
   };
 </script>
 
-<style lang="sass" rel="stylesheet/scss" scoped>
-  .app-layout{
+<style lang="scss" rel="stylesheet/scss" scoped>
+  .app-layout {
     .main {
       .main-wrapper {
         .main-body {

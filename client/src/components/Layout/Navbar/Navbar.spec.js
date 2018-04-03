@@ -1,13 +1,13 @@
 import Vue from 'vue';
 
-import { router } from '../../../router';
+import {router} from '../../../router';
 
-import { VueTooltip } from '@kashio/vue-tooltip';
+import {VueTooltip} from '@kashio/vue-tooltip';
 import '@kashio/vue-tooltip/dist/index.css';
 
 Vue.use(VueTooltip);
 
-import Navbar from './Navbar.vue';
+import Navbar from './Navbar';
 
 describe('Navbar', () => {
   it('should be named Navbar', () => {
@@ -35,7 +35,7 @@ describe('Navbar', () => {
     });
   });
   it('should render correctly', () => {
-    const injector = require('!!vue-loader?inject!./Navbar.vue');
+    const injector = require('!!vue-loader?inject!./Navbar');
     const MockedComponent = injector({
       '../../../services/links': {
         links: [

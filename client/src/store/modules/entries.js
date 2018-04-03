@@ -12,7 +12,7 @@ const getters = {
 };
 
 const actions = {
-  getEntries({ commit }, vm) {
+  getEntries({commit}, vm) {
     entriesService(vm)
       .get(vm.path)
       .then(response => {
@@ -30,7 +30,7 @@ const actions = {
           ...config.toastFailure
         }));
   },
-  createEntry({ commit }, vm) {
+  createEntry({commit}, vm) {
     entryService(vm)
       .create(vm.newEntry)
       .then(response => {
@@ -49,7 +49,7 @@ const actions = {
           ...config.toastFailure
         }));
   },
-  deleteEntry({ commit }, vm) {
+  deleteEntry({commit}, vm) {
     entryService(vm)
       .remove(vm.entry.name)
       .then(response => {
@@ -65,7 +65,7 @@ const actions = {
           ...config.toastFailure
         }));
   },
-  renameEntry({ commit }, vm) {
+  renameEntry({commit}, vm) {
     entryService(vm)
       .rename(vm.entry.path, vm.entry.name)
       .then(response => {
@@ -98,7 +98,8 @@ const mutations = {
   },
   [types.RENAME_ENTRY](state, args) {
     const entry = state.entries[args.index];
-    entry.path = entry.name = args.name;
+    entry.name = args.name;
+    entry.path = args.name;
   },
   [types.SET_ENTRY_NAME](state, args) {
     const entry = state.entries[args.index];

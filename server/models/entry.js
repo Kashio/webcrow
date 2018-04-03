@@ -1,69 +1,73 @@
-'use strict';
+const path = require('path');
+const Promise = require('promise');
+const fse = require('fs-extra');
+const fspvr = require('fspvr');
+const utils = require('../utils');
 
-import fs from 'fs';
-import path from 'path';
-import util from 'util';
-import fsp from 'fs-promise';
-import fspvr from 'fspvr';
-import utils from '../utils';
+const OUTSIDE_WEBCROW_HOME_FOLDER_MESSAGE = `entry needs to be inside ${process.env.WEBCROW_HOME}`;
 
-const OUTSIDE_WEBCROW_HOME_FOLDER_MESSAGE = util.format('entry needs to be inside %s', process.env.WEBCROW_HOME);
-
-export default {
-  create: (entry, done) => {
+const create = entry => {
+  return new Promise((resolve, reject) => {
     const directory = path.join(process.env.WEBCROW_HOME, entry.path);
-    if (!utils.isEntryInsideWebCrowHome(directory)) {
-      done({
-        message: OUTSIDE_WEBCROW_HOME_FOLDER_MESSAGE
-      });
-    } else {
-      if (!fspvr.isPathValid(entry.path, true)) {
-        done({
-          message: util.format('%s is not a valid entry path', entry.path)
-        });
-      } else {
-        fsp.access(directory)
+    if (utils.isEntryInsideWebCrowHome(directory)) {
+      if (fspvr.isPathValid(entry.path, true)) {
+        fse.pathExists(directory)
           .then(() => {
-            done({
-              message: util.format('entry %s already exists', entry.path)
-            });
+            reject(new Error(`entry ${entry.path} already exists`));
           })
           .catch(() => {
-            fsp.ensureDir(directory)
-              .then(() => {
-                done();
+            fse.ensureDir(directory)
+              .then(resolve)
+              .catch(() => {
+                reject(new Error(`error creating entry ${entry.path}`));
               });
           });
-      }
-    }
-  },
-  rename: (entryPath, name, done) => {
-    const directory = path.join(process.env.WEBCROW_HOME, entryPath);
-    if (!utils.isEntryInsideWebCrowHome(directory)) {
-      done({
-        message: OUTSIDE_WEBCROW_HOME_FOLDER_MESSAGE
-      });
-    } else {
-      if (!fspvr.isSegmentValid(name, true)) {
-        done({
-          message: util.format('%s is not a valid entry name', name)
-        });
       } else {
-        const newEntryPath = directory.replace(new RegExp('[^\\' + path.sep + ']+$'), name);
-        fs.rename(directory, newEntryPath, done);
+        reject(new Error(`${entry.path} is not a valid entry path`));
       }
-    }
-  },
-  delete: (entryPath, done) => {
-    const directory = path.join(process.env.WEBCROW_HOME, entryPath);
-    if (!utils.isEntryInsideWebCrowHome(directory)) {
-      done({
-        message: OUTSIDE_WEBCROW_HOME_FOLDER_MESSAGE
-      });
     } else {
-      fsp.remove(directory)
-        .then(done)
-        .catch(done);
+      reject(new Error(OUTSIDE_WEBCROW_HOME_FOLDER_MESSAGE));
     }
-  }
+  });
+};
+
+const rename = (entryPath, name) => {
+  return new Promise((resolve, reject) => {
+    const directory = path.join(process.env.WEBCROW_HOME, entryPath);
+    if (utils.isEntryInsideWebCrowHome(directory)) {
+      if (fspvr.isSegmentValid(name, true)) {
+        const newEntryPath = directory.replace(new RegExp('[^\\' + path.sep + ']+$'), name);
+        fse.rename(directory, newEntryPath)
+          .then(resolve)
+          .catch(() => {
+            reject(new Error(`error renaming entry ${entryPath}`));
+          });
+      } else {
+        reject(new Error(`${name} is not a valid entry name`));
+      }
+    } else {
+      reject(new Error(OUTSIDE_WEBCROW_HOME_FOLDER_MESSAGE));
+    }
+  });
+};
+
+const remove = entryPath => {
+  return new Promise((resolve, reject) => {
+    const directory = path.join(process.env.WEBCROW_HOME, entryPath);
+    if (utils.isEntryInsideWebCrowHome(directory)) {
+      fse.remove(directory)
+        .then(resolve)
+        .catch(() => {
+          reject(new Error(`error deleting entry ${entryPath}`));
+        });
+    } else {
+      reject(new Error(OUTSIDE_WEBCROW_HOME_FOLDER_MESSAGE));
+    }
+  });
+};
+
+module.exports = {
+  create,
+  rename,
+  remove
 };

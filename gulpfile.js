@@ -11,15 +11,14 @@ const serverHub = new HubRegistry([conf.path.server.tasks('*.js')]);
 gulp.registry(clientHub);
 gulp.registry(serverHub);
 
-gulp.task('server:build', gulp.parallel('server:other', 'server:dist'));
 gulp.task('client:build', gulp.parallel('client:other', 'webpack:dist'));
 gulp.task('test', gulp.series('karma:single-run'));
 gulp.task('test:auto', gulp.series('karma:auto-run'));
 gulp.task('serve:client', gulp.series('webpack:watch', 'watch', 'browsersync'));
-gulp.task('serve:server', gulp.series('server:other', 'server:watch'));
+gulp.task('serve:server', gulp.series('server:watch'));
 gulp.task('serve', gulp.parallel('serve:server', 'serve:client'));
 gulp.task('serve:dist', gulp.series('default', 'browsersync:dist'));
-gulp.task('default', gulp.parallel(gulp.series('server:clean', 'server:build'), gulp.series('client:clean', 'client:build')));
+gulp.task('default', gulp.series('client:clean', 'client:build'));
 gulp.task('watch', watch);
 
 function reloadBrowserSync(cb) {

@@ -1,11 +1,11 @@
-import express from 'express';
-import path from 'path';
-// import favicon from 'serve-favicon';
-import logger from 'morgan';
-import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
-import swaggerize from 'swaggerize-express';
-import cors from 'cors';
+const express = require('express');
+const path = require('path');
+// const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const swaggerize = require('swaggerize-express');
+const cors = require('cors');
 
 const app = express();
 

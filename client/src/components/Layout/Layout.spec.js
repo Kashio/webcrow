@@ -1,10 +1,10 @@
 import Vue from 'vue';
 
-import { router } from '../../router';
+import {router} from '../../router';
 
-import Layout from './Layout.vue';
-import Header from './Header/Header.vue';
-import Navbar from './Navbar/Navbar.vue';
+import Layout from './Layout';
+import Header from './Header/Header';
+import Navbar from './Navbar/Navbar';
 
 describe('Layout', () => {
   it('should be named Layout', () => {
@@ -12,8 +12,8 @@ describe('Layout', () => {
   });
   it('should have correct default components', () => {
     expect(Layout.components).toEqual({
-      'header-component': Header,
-      'navbar-component': Navbar
+      Header,
+      Navbar
     });
   });
   xit('should render correctly', () => {

@@ -9,5 +9,5 @@ export default instance => {
     });
   };
 
-  return { create, remove };
+  return {create, remove};
 };

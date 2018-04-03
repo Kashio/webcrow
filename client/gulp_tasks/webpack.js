@@ -2,8 +2,8 @@ const gulp = require('gulp');
 const gutil = require('gulp-util');
 
 const webpack = require('webpack');
-const webpackConf = require('../conf/webpack.conf');
-const webpackDistConf = require('../conf/webpack-dist.conf');
+const webpackConf = require('../conf/webpack.dev.conf');
+const webpackDistConf = require('../conf/webpack.prod.conf');
 const gulpConf = require('../../gulp.conf');
 const browsersync = require('browser-sync');
 
@@ -16,7 +16,6 @@ gulp.task('webpack:watch', done => {
 });
 
 gulp.task('webpack:dist', done => {
-  process.env.NODE_ENV = 'production';
   webpackWrapper(false, webpackDistConf, done);
 });
 

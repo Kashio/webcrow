@@ -4,16 +4,16 @@
     <i class="fa fa-pencil" @click="toggleEditable(entryIndex)"></i>
     <i class="fa fa-folder-o"></i>
     <input v-truncated-title class="project-name"
-          :readonly="!entry.isEditable"
-          v-focus-toggle="entry.isEditable"
-          @blur="renameEntry"
-          @keyup.enter="renameEntry"
-          :value="entry.name" @input="setEntryName"/>
+           :readonly="!entry.isEditable"
+           v-focus-toggle="entry.isEditable"
+           @blur="renameEntry"
+           @keyup.enter="renameEntry"
+           :value="entry.name" @input="setEntryName"/>
   </div>
 </template>
 
 <script>
-  import { mapMutations } from 'vuex'
+  import {mapMutations} from 'vuex';
 
   export default {
     name: 'Entry',
@@ -50,10 +50,10 @@
         }
       },
       setEntryName(e) {
-          this.$store.commit('SET_ENTRY_NAME', {
-            index: this.entryIndex,
-            name: e.target.value
-          });
+        this.$store.commit('SET_ENTRY_NAME', {
+          index: this.entryIndex,
+          name: e.target.value
+        });
       },
       ...mapMutations({
         toggleEditable: 'TOGGLE_ENTRY_EDITABLE'
@@ -62,7 +62,7 @@
   };
 </script>
 
-<style lang="sass" rel="stylesheet/scss" scoped>
+<style lang="scss" rel="stylesheet/scss" scoped>
   $input-border-color: #969696;
   $input-border-color-focus: #c9c9c9;
   $new-entry-button-font-color: #c9c9c9;

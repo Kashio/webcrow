@@ -2,8 +2,9 @@
   <nav class="navigation-container">
     <div class="navigation">
       <div class="links">
-        <router-link v-for="link in links" :to="link.to" class="link" v-tooltip="{ message: link.description }">
-            <i class="fa" :class="link.icon"></i>
+        <router-link v-for="(link, index) in links" :key="index" :to="link.to" class="link"
+                     v-tooltip="{ message: link.description }">
+          <i class="fa" :class="link.icon"></i>
         </router-link>
       </div>
       <div class="menu">
@@ -14,7 +15,8 @@
 </template>
 
 <script>
-  import { links } from '../../../services/links';
+  import {links} from '../../../services/links';
+
   export default {
     name: 'Navbar',
     data() {
@@ -25,7 +27,7 @@
   };
 </script>
 
-<style lang="sass" rel="stylesheet/scss" scoped>
+<style lang="scss" rel="stylesheet/scss" scoped>
   $font-stack: 'Open Sans', sans-serif;
   $primary-color: #1a1a1a;
   $secondary-color: #121212;
@@ -49,7 +51,7 @@
             background: $link-hover-color;
             color: $link-hover-font-color;
           }
-          display: block;
+          display:block;
           width: 34px;
           height: 34px;
           line-height:34px;
@@ -58,35 +60,35 @@
           color: $link-font-color;
           margin: 0 auto 10px;
           border-radius: 50%;
-          -webkit-font-smoothing: antialiased;
-          text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
-          cursor: pointer;
-          transition: all .15s ease;
+          -webkit-font-smoothing:antialiased;
+          text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+          cursor:pointer;
+          transition:all .15s ease;
         }
         width: 50px;
-        height: inherit;
-        display: table-cell;
+        height:inherit;
+        display:table-cell;
         padding: 10px 0;
         background-color: $secondary-color;
       }
       .menu {
-        height: inherit;
-        display: table-cell;
-        position: relative;
+        height:inherit;
+        display:table-cell;
+        position:relative;
         padding: 10px 0;
         font-family: $font-stack;
       }
-      width: inherit;
-      height: inherit;
-      display: table;
+      width:inherit;
+      height:inherit;
+      display:table;
     }
-    display: table-cell;
+    display:table-cell;
     width: 270px;
     height: 100%;
     background-color: $primary-color;
     border-color: $border-color;
     border-right: 1px solid;
-    box-sizing: border-box;
-    user-select: none;
+    box-sizing:border-box;
+    user-select:none;
   }
 </style>

@@ -23,8 +23,8 @@
   };
 </script>
 
-<style lang="sass" rel="stylesheet/scss" scoped>
-  $menu-section-header-border-color: hsla(0,0%,61%,.07);
+<style lang="scss" rel="stylesheet/scss" scoped>
+  $menu-section-header-border-color: hsla(0, 0%, 61%, .07);
   $menu-section-header-color: #797979;
   $menu-section-body-color: #ababab;
 
