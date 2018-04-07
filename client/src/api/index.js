@@ -1,6 +1,3 @@
-import Vue from 'vue';
-import VueResource from 'vue-resource';
+import axios from 'axios';
 
-Vue.use(VueResource);
-
-Vue.http.options.root = 'http://localhost:8080/v1';
+axios.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';

@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const conf = require('../../gulp.conf');
 const path = require('path');
 
@@ -34,11 +33,6 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new webpack.LoaderOptionsPlugin({
-      debug: true,
-    })
-  ],
   devtool: 'inline-source-map',
   context: path.join(process.cwd(), conf.paths.client.src),
   entry: './app.js'

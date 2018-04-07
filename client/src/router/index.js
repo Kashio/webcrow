@@ -3,8 +3,8 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-import Layout from '../components/Layout/Layout.vue';
-import ProjectMenu from '../components/Projects/Menu/Menu.vue';
+import Layout from '../components/Layout/Layout';
+import ProjectMenu from '../components/Projects/Menu/Menu';
 
 const Bar = {render: h => h('div', 'Bar')};
 

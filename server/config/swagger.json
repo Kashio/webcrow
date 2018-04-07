@@ -19,15 +19,15 @@
         "summary": "Get entries",
         "parameters": [
           {
-            "name": "entryPath",
+            "name": "path",
             "in": "query",
             "description": "Entry path",
-            "required": false,
+            "required": true,
             "type": "string"
           }
         ],
         "tags": [
-          "Entry"
+          "Entries"
         ],
         "responses": {
           "200": {
@@ -46,9 +46,7 @@
             }
           }
         }
-      }
-    },
-    "/entry": {
+      },
       "post": {
         "summary": "Create entry",
         "consumes": [
@@ -56,7 +54,7 @@
         ],
         "parameters": [
           {
-            "name": "entry",
+            "name": "path",
             "in": "body",
             "description": "Entry object",
             "required": true,
@@ -66,7 +64,7 @@
           }
         ],
         "tags": [
-          "Entry"
+          "Entries"
         ],
         "responses": {
           "201": {
@@ -87,7 +85,7 @@
         ],
         "parameters": [
           {
-            "name": "entryPath",
+            "name": "path",
             "in": "formData",
             "description": "Entry path",
             "required": true,
@@ -102,7 +100,7 @@
           }
         ],
         "tags": [
-          "Entry"
+          "Entries"
         ],
         "responses": {
           "200": {
@@ -120,7 +118,7 @@
         "summary": "Delete entry",
         "parameters": [
           {
-            "name": "entryPath",
+            "name": "path",
             "in": "query",
             "description": "Entry path",
             "required": true,
@@ -128,7 +126,7 @@
           }
         ],
         "tags": [
-          "Entry"
+          "Entries"
         ],
         "responses": {
           "200": {
@@ -185,9 +183,9 @@
         ],
         "parameters": [
           {
-            "name": "entryPath",
+            "name": "path",
             "in": "formData",
-            "description": "Entry path",
+            "description": "Fixture path",
             "required": true,
             "type": "string"
           },
@@ -677,6 +675,10 @@
         },
         {
           "properties": {
+            "path": {
+              "type": "string",
+              "description": "Fixture path"
+            },
             "page": {
               "type": "string",
               "description": "Page url"

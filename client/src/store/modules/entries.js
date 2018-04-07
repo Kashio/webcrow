@@ -1,7 +1,9 @@
 import entriesService from '../../api/entries';
-import entryService from '../../api/entry';
 import * as types from '../mutation-types';
-import config from '../../app.config';
+import config from 'config';
+import {SHORTCUT, DIRECTORY, TEST} from '@/components/Projects/Menu/Entry/types';
+
+const namespaced = true;
 
 const state = {
   entries: []
@@ -12,106 +14,121 @@ const getters = {
 };
 
 const actions = {
-  getEntries({commit}, vm) {
-    entriesService(vm)
-      .get(vm.path)
+  setEntries({commit}, payload) {
+    return entriesService
+      .get(payload.path)
       .then(response => {
-        commit(types.SET_ENTRIES, response.data.map(entry => {
+        const entries = response.data.map(entry => {
           return {
-            path: entry,
+            path: payload.path + PATH_SEP + entry,
             name: entry,
-            isEditable: false
+            isEditable: false,
+            type: entry.endsWith(TEST_FILE_SUFFIX) ? TEST : DIRECTORY
           };
-        }));
+        });
+        if (payload.path.length) {
+          entries.splice(0, 0, {
+            path: payload.path.substring(0, payload.path.lastIndexOf(PATH_SEP)),
+            name: '..',
+            type: SHORTCUT
+          });
+        }
+        commit(types.SET_ENTRIES, {
+          entries
+        });
+        return entries.length;
       })
-      .catch(error =>
-        vm.$toast({
-          message: 'error getting entries. ' + error.body,
-          ...config.toastFailure
-        }));
+      .catch(error => {
+        if (process.env.NODE_ENV !== 'production') {
+          console.error(error.message);
+        }
+        throw error;
+      });
   },
-  createEntry({commit}, vm) {
-    entryService(vm)
-      .create(vm.newEntry)
+  createEntry({commit}, payload) {
+    return entriesService
+      .create(payload.path + payload.entry.name)
       .then(response => {
         commit(types.ADD_ENTRY, {
-          name: vm.newEntry,
-          isEditable: false
+          entry: {
+            path: payload.path + payload.entry.name,
+            name: payload.entry.name,
+            type: payload.entry.type,
+            isEditable: false
+          }
         });
-        vm.$toast({
-          message: response.body,
-          ...config.toastSuccess
-        });
+        return response;
       })
-      .catch(error =>
-        vm.$toast({
-          message: error.body,
-          ...config.toastFailure
-        }));
+      .catch(error => {
+        if (process.env.NODE_ENV !== 'production') {
+          console.error(error.message);
+        }
+        throw error;
+      });
   },
-  deleteEntry({commit}, vm) {
-    entryService(vm)
-      .remove(vm.entry.name)
+  renameEntry({commit}, payload) {
+    return entriesService
+      .rename(payload.entry.path, payload.display)
       .then(response => {
-        commit(types.REMOVE_ENTRY, vm.entryIndex);
-        vm.$toast({
-          message: response.body,
-          ...config.toastSuccess
+        commit(types.SET_ENTRY_PATH, {
+          index: payload.index,
+          path: payload.entry.path.replace(new RegExp(`${payload.entry.name}$`), payload.display)
         });
+        commit(types.SET_ENTRY_NAME, {
+          index: payload.index,
+          name: payload.display
+        });
+        return response;
       })
-      .catch(error =>
-        vm.$toast({
-          message: error.body,
-          ...config.toastFailure
-        }));
+      .catch(error => {
+        if (process.env.NODE_ENV !== 'production') {
+          console.error(error.message);
+        }
+        throw error;
+      });
   },
-  renameEntry({commit}, vm) {
-    entryService(vm)
-      .rename(vm.entry.path, vm.entry.name)
+  deleteEntry({commit}, payload) {
+    entriesService
+      .remove(payload.entry.path)
       .then(response => {
-        commit(types.RENAME_ENTRY, {
-          index: vm.entryIndex,
-          name: vm.entry.name
-        });
-        vm.$toast({
-          message: response.body,
-          ...config.toastSuccess
-        });
+        commit(types.REMOVE_ENTRY, payload.index);
+        return response;
       })
-      .catch(error =>
-        vm.$toast({
-          message: error.body,
-          ...config.toastFailure
-        }));
+      .catch(error => {
+        if (process.env.NODE_ENV !== 'production') {
+          console.error(error.message);
+        }
+        throw error;
+      });
   }
 };
 
 const mutations = {
-  [types.SET_ENTRIES](state, entries) {
-    state.entries = entries;
+  [types.SET_ENTRIES](state, payload) {
+    state.entries = payload.entries;
   },
-  [types.ADD_ENTRY](state, entry) {
-    state.entries.push(entry);
+  [types.ADD_ENTRY](state, payload) {
+    state.entries.push(payload.entry);
   },
   [types.REMOVE_ENTRY](state, index) {
     state.entries.splice(index, 1);
   },
-  [types.RENAME_ENTRY](state, args) {
-    const entry = state.entries[args.index];
-    entry.name = args.name;
-    entry.path = args.name;
+  [types.SET_ENTRY_PATH](state, payload) {
+    const entry = state.entries[payload.index];
+    entry.path = payload.path;
   },
-  [types.SET_ENTRY_NAME](state, args) {
-    const entry = state.entries[args.index];
-    entry.name = args.name;
+  [types.SET_ENTRY_NAME](state, payload) {
+    const entry = state.entries[payload.index];
+    entry.name = payload.name;
   },
-  [types.TOGGLE_ENTRY_EDITABLE](state, index) {
-    const entry = state.entries[index];
+  [types.TOGGLE_ENTRY_EDITABLE](state, payload) {
+    const entry = state.entries[payload.index];
     entry.isEditable = !entry.isEditable;
   }
 };
 
 export default {
+  namespaced,
   state,
   getters,
   actions,

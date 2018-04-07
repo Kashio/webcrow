@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const conf = require('../../gulp.conf');
 const path = require('path');
 
@@ -9,6 +10,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
+      config$: path.resolve(process.cwd(), conf.path.client.src('app.config.js')),
       '@': path.join(process.cwd(), conf.paths.client.src)
     }
   },
@@ -60,6 +62,10 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css'
+    }),
+    new webpack.DefinePlugin({
+      PATH_SEP: JSON.stringify(path.sep),
+      TEST_FILE_SUFFIX: JSON.stringify(".test.js")
     })
   ],
   devtool: 'source-map',

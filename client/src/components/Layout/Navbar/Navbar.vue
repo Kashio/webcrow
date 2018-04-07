@@ -3,7 +3,7 @@
     <div class="navigation">
       <div class="links">
         <router-link v-for="(link, index) in links" :key="index" :to="link.to" class="link"
-                     v-tooltip="{ message: link.description }">
+                     v-tooltip="{ message: link.description, fade: 'fast' }">
           <i class="fa" :class="link.icon"></i>
         </router-link>
       </div>

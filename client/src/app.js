@@ -12,8 +12,11 @@ import '@kashio/vue-tooltip/dist/index.css';
 import {VueToast} from '@kashio/vue-toast';
 import '@kashio/vue-toast/dist/index.css';
 
+import VModal from 'vue-js-modal';
+
 Vue.use(VueTooltip);
 Vue.use(VueToast);
+Vue.use(VModal, {dialog: true});
 
 Vue.maxToasts = 3;
 

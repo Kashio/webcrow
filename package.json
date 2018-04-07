@@ -12,7 +12,9 @@
   "dependencies": {
     "@kashio/vue-toast": "^1.0.7",
     "@kashio/vue-tooltip": "^1.0.3",
+    "axios": "^0.18.0",
     "body-parser": "^1.15.2",
+    "chokidar": "^2.0.3",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.1",
     "debug": "^3.1.0",
@@ -21,14 +23,13 @@
     "fspvr": "^1.0.7",
     "jquery": "^3.3.1",
     "morgan": "^1.7.0",
-    "promise": "^8.0.1",
     "pug": "^2.0.3",
     "serve-favicon": "^2.5.0",
+    "socket.io": "^2.1.0",
     "swaggerize-express": "^4.0.5",
     "vue": "^2.5.16",
-    "vue-resource": "^1.5.0",
+    "vue-js-modal": "^1.3.12",
     "vue-router": "^3.0.1",
-    "vue2-scrollbar": "0.0.3",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

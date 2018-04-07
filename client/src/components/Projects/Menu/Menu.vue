@@ -1,67 +1,74 @@
 <template>
   <div class="menu-wrapper">
-    <section-component header="Create Entry" id="create-entry-section">
-      <item-component>
-        <div>
-          <i class="fa fa-plus pointer" @click="createEntry"></i>
-          <input type="text" placeholder="Entry name" class="new-entry-input" v-model="newEntry"
-                 @keyup.enter="createEntry"/>
-        </div>
-      </item-component>
-    </section-component>
-    <section-component header="Entries" id="entries-section">
-      <vue-scroll-bar class="vue-scroll-bar">
-        <div class="vue-scroll-bar-content">
-          <item-component v-for="(entry, index) in entries" :key="index">
-            <entry-component :entry="entry" :entry-index="index"></entry-component>
-          </item-component>
-        </div>
-      </vue-scroll-bar>
-    </section-component>
+    <Section header="Add Directory" class="add-directory-section">
+      <Item>
+        <DirectoryCreator/>
+      </Item>
+    </Section>
+    <Section header="Add Test" class="add-test-section">
+      <Item>
+        <TestCreator/>
+      </Item>
+    </Section>
+    <Section header="Entries" class="entries-section">
+      <div class="entries-content">
+        <Item v-for="(entry, index) in entries" :key="entry.name">
+          <Entry :entry="entry" :index="index"></Entry>
+        </Item>
+      </div>
+    </Section>
   </div>
 </template>
 
 <script>
-  import {mapGetters, mapActions} from 'vuex';
+  import {mapGetters} from 'vuex';
+  import config from 'config';
   import Section from '../../Layout/Navbar/Section/Section';
   import Item from '../../Layout/Navbar/Section/Item/Item';
+  import DirectoryCreator from './DirectoryCreator/DirectoryCreator';
+  import TestCreator from './TestCreator/TestCreator';
   import Entry from './Entry/Entry';
-  import EntriesService from '../../../api/entries';
-  import EntryService from '../../../api/entry';
-  import config from '../../../app.config';
-
-  import VueScrollBar from 'vue2-scrollbar';
-  import 'vue2-scrollbar/dist/style/vue2-scrollbar.css';
 
   export default {
     name: 'Menu',
     components: {
-      'vue-scroll-bar': VueScrollBar,
-      'section-component': Section,
-      'item-component': Item,
-      'entry-component': Entry
-    },
-    data() {
-      return {
-        path: '',
-        newEntry: ''
-      };
+      Section,
+      Item,
+      DirectoryCreator,
+      TestCreator,
+      Entry
     },
     created() {
-      this.getEntries(this);
+      this.setEntries();
     },
     computed: {
-      ...mapGetters([
+      ...mapGetters('path', [
+        'path'
+      ]),
+      ...mapGetters('entries', [
         'entries'
       ])
     },
     methods: {
-      createEntry() {
-        this.$store.dispatch('createEntry', this);
-      },
-      ...mapActions([
-        'getEntries'
-      ])
+      setEntries() {
+        this
+          .$store
+          .dispatch('entries/setEntries', {
+            path: this.path
+          })
+          .then(numberOfEntries => {
+            this.$toast({
+              message: `Successfully loaded ${numberOfEntries} entrie(s)`,
+              ...config.toast.success
+            });
+          })
+          .catch(() => {
+            this.$toast({
+              message: 'Error loading entries',
+              ...config.toast.failure
+            });
+          });
+      }
     }
   };
 </script>
@@ -82,7 +89,7 @@
     right: 10px;
   }
 
-  #create-entry-section {
+  .add-directory-section, .add-test-section {
     div {
       opacity: .3;
     }
@@ -96,7 +103,7 @@
     line-height: 1.65;
   }
 
-  .new-entry-input {
+  .new-directory-input, .new-test-input {
     width: 70%;
     margin-left: 10px;
     color: white;
@@ -109,17 +116,27 @@
     transition: border 0.3s;
   }
 
-  .new-entry-input:focus {
+  .new-directory-input:focus, .new-test-input:focus {
     border-bottom: solid 1px $input-border-color-focus;
   }
 
-  #entries-section {
-    .vue-scroll-bar {
-      background-color: inherit;
-      position: absolute;
-      top: 96px;
-      bottom: 0;
-      right: -10px;
+  .entries-section {
+    .entries-content {
+      &::-webkit-scrollbar {
+        width: 12px;
+      }
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: $project-hover-background-color;
+      }
+      position: relative;
+      left: -10px;
+      width: 110%;
+      height: 752px;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
   }
 </style>
