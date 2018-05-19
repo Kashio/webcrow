@@ -32,20 +32,20 @@
           .$store
           .dispatch('entries/createEntry', {
             entry: {
+              path: this.path + this.test.name + TEST_FILE_SUFFIX,
               name: this.test.name + TEST_FILE_SUFFIX,
               type: TEST
-            },
-            path: this.path
+            }
           })
-          .then(() => {
+          .then(response => {
             this.$toast({
-              message: `Successfully created test "${this.test.name}"`,
+              message: `Successfully created test "${response.data}"`,
               ...config.toast.success
             });
           })
-          .catch(() => {
+          .catch(error => {
             this.$toast({
-              message: `Error creating test "${this.test.name}"`,
+              message: `Error creating test "${error.data}"`,
               ...config.toast.failure
             });
           });
@@ -57,6 +57,14 @@
 <style lang="scss" rel="stylesheet/scss" scoped>
   $input-border-color: #969696;
   $input-border-color-focus: #c9c9c9;
+  $create-test-color: #797979;
+
+  .fa-plus:hover {
+    &:hover {
+      color: lighten($create-test-color, 50%);
+    }
+    color: $create-test-color;
+  }
 
   .test-name-input,
   .test-website-url,
@@ -65,7 +73,7 @@
     width: 70%;
     margin-left: 10px;
     color: white;
-    background-color: inherit;
+    background-color: transparent;
     height: 0;
     outline: none;
     padding: 10px;
