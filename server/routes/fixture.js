@@ -1,51 +1,16 @@
-'use strict';
-var dataProvider = require('./fixture.js');
-/**
- * Operations on /fixture
- */
-module.exports = {
-    /**
-     * summary: Create fixture
-     * description: 
-     * parameters: fixture
-     * produces: 
-     * responses: 201, 403, default
-     */
-    post: function (req, res, next) {
-        /**
-         * Get the data for response 201
-         * For response `default` status 200 is used.
-         */
-        var status = 201;
-        var provider = dataProvider['post']['201'];
-        provider(req, res, function (err, data) {
-            if (err) {
-                next(err);
-                return;
-            }
-            res.status(status).send(data && data.responses);
-        });
-    },
-    /**
-     * summary: Update fixture details
-     * description: 
-     * parameters: entryPath, name, page, username, password
-     * produces: 
-     * responses: 200, 403, default
-     */
-    put: function (req, res, next) {
-        /**
-         * Get the data for response 200
-         * For response `default` status 200 is used.
-         */
-        var status = 200;
-        var provider = dataProvider['put']['200'];
-        provider(req, res, function (err, data) {
-            if (err) {
-                next(err);
-                return;
-            }
-            res.status(status).send(data && data.responses);
-        });
-    }
-};
+const express = require('express');
+const router = express.Router();
+
+const dataProvider = require('../models/fixture.js');
+
+router.get('/', (req, res) => {
+  dataProvider.get(req.query.path)
+    .then(code => {
+      res.status(200).send(code);
+    })
+    .catch(error => {
+      res.status(500).send(error.message);
+    });
+});
+
+module.exports = router;

@@ -14,9 +14,9 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  dataProvider.create(req.body.path)
+  dataProvider.create(req.body.entry)
     .then(() => {
-      res.status(201).send(req.body.path);
+      res.status(201).send(req.body.entry.name);
     })
     .catch(error => {
       res.status(409).send(error.message);
@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/', (req, res) => {
-  dataProvider.rename(req.body.path, req.body.name)
+  dataProvider.rename(req.body.entry, req.body.name)
     .then(() => {
       res.status(200).send(req.body.name);
     })

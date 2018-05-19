@@ -3,7 +3,7 @@
   "parser": "babel-eslint",
   "globals": {
     "PATH_SEP": true,
-    "TEST_FILE_SUFFIX": true
+    "FIXTURE_FILE_SUFFIX": true
   },
   "rules": {
     "linebreak-style": 0,

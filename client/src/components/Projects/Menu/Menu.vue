@@ -7,7 +7,7 @@
     </Section>
     <Section header="Add Test" class="add-test-section">
       <Item>
-        <TestCreator/>
+        <FixtureCreator/>
       </Item>
     </Section>
     <Section header="Entries" class="entries-section">
@@ -26,7 +26,7 @@
   import Section from '../../Layout/Navbar/Section/Section';
   import Item from '../../Layout/Navbar/Section/Item/Item';
   import DirectoryCreator from './DirectoryCreator/DirectoryCreator';
-  import TestCreator from './TestCreator/TestCreator';
+  import FixtureCreator from './FixtureCreator/FixtureCreator';
   import Entry from './Entry/Entry';
 
   export default {
@@ -35,11 +35,11 @@
       Section,
       Item,
       DirectoryCreator,
-      TestCreator,
+      FixtureCreator,
       Entry
     },
     created() {
-      this.setEntries();
+      this.getEntries();
     },
     computed: {
       ...mapGetters('path', [
@@ -50,17 +50,19 @@
       ])
     },
     methods: {
-      setEntries() {
+      getEntries() {
         this
           .$store
-          .dispatch('entries/setEntries', {
+          .dispatch('entries/getEntries', {
             path: this.path
           })
           .then(numberOfEntries => {
-            this.$toast({
-              message: `Successfully loaded ${numberOfEntries} entrie(s)`,
-              ...config.toast.success
-            });
+            if (numberOfEntries > 0) {
+              this.$toast({
+                message: `Successfully loaded ${numberOfEntries} ${numberOfEntries === 1 ? 'entry' : 'entries'}`,
+                ...config.toast.success
+              });
+            }
           })
           .catch(() => {
             this.$toast({

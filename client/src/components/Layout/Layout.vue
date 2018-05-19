@@ -8,7 +8,7 @@
             <router-view name="menu" slot="menu"></router-view>
           </Navbar>
           <main>
-            <router-view name="main"></router-view>
+            <router-view name="content"></router-view>
           </main>
         </div>
       </div>
@@ -33,20 +33,20 @@
 <style lang="scss" rel="stylesheet/scss" scoped>
   $font-stack: 'Open Sans', sans-serif;
 
-  .app-modal {
-    font-family: $font-stack !important;
-    /*background: #182028 !important;*/
-    /*color: white !important;*/
-    background-color: transparent;
-    border-radius: 100%;
-    box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.65);
+  .v--modal-overlay {
+    font-family: $font-stack;
   }
 
   .app-layout {
     .main {
       .main-wrapper {
         .main-body {
+          main {
+            display: table-cell;
+            width: calc(100% - 270px);
+            height: 100%;
+            vertical-align: top
+          }
           display: table;
           height: 100%;
           width: 100%;

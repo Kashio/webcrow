@@ -1,93 +1,36 @@
-'use strict';
-var Mockgen = require('./mockgen.js');
-/**
- * Operations on /fixture
- */
-module.exports = {
-    /**
-     * summary: Create fixture
-     * description: 
-     * parameters: fixture
-     * produces: 
-     * responses: 201, 403, default
-     * operationId: 
-     */
-    post: {
-        201: function (req, res, callback) {
-            /**
-             * Using mock data generator module.
-             * Replace this by actual data for the api.
-             */
-            Mockgen().responses({
-                path: '/fixture',
-                operation: 'post',
-                response: '201'
-            }, callback);
-        },
-        403: function (req, res, callback) {
-            /**
-             * Using mock data generator module.
-             * Replace this by actual data for the api.
-             */
-            Mockgen().responses({
-                path: '/fixture',
-                operation: 'post',
-                response: '403'
-            }, callback);
-        },
-        default: function (req, res, callback) {
-            /**
-             * Using mock data generator module.
-             * Replace this by actual data for the api.
-             */
-            Mockgen().responses({
-                path: '/fixture',
-                operation: 'post',
-                response: 'default'
-            }, callback);
-        }
-    },
-    /**
-     * summary: Update fixture details
-     * description: 
-     * parameters: entryPath, name, page, username, password
-     * produces: 
-     * responses: 200, 403, default
-     * operationId: 
-     */
-    put: {
-        200: function (req, res, callback) {
-            /**
-             * Using mock data generator module.
-             * Replace this by actual data for the api.
-             */
-            Mockgen().responses({
-                path: '/fixture',
-                operation: 'put',
-                response: '200'
-            }, callback);
-        },
-        403: function (req, res, callback) {
-            /**
-             * Using mock data generator module.
-             * Replace this by actual data for the api.
-             */
-            Mockgen().responses({
-                path: '/fixture',
-                operation: 'put',
-                response: '403'
-            }, callback);
-        },
-        default: function (req, res, callback) {
-            /**
-             * Using mock data generator module.
-             * Replace this by actual data for the api.
-             */
-            Mockgen().responses({
-                path: '/fixture',
-                operation: 'put',
-                response: 'default'
-            }, callback);
-        }
+const path = require('path');
+const fse = require('fs-extra');
+const fspvr = require('fspvr');
+const utils = require('../utils');
+
+const OUTSIDE_WEBCROW_HOME_FOLDER_MESSAGE = `entry needs to be inside ${process.env.WEBCROW_HOME}`;
+
+const get = fixturePath => {
+  return new Promise((resolve, reject) => {
+    const completeFixturePath = path.join(process.env.WEBCROW_HOME, fixturePath);
+    if (utils.isEntryInsideWebCrowHome(completeFixturePath)) {
+      if (fspvr.isPathValid(completeFixturePath, true)) {
+        fse.pathExists(completeFixturePath)
+          .then(exists => {
+            if (exists) {
+              fse.readFile(completeFixturePath)
+                .then(resolve)
+                .catch(() => {
+                  reject(new Error(`error reading fixture ${completeFixturePath} code`));
+                });
+            } else {
+              reject(new Error(`entry ${completeFixturePath} doesn't exists`));
+            }
+          });
+      } else {
+        reject(new Error(`${completeFixturePath} is not a valid entry path`));
+      }
+    } else {
+      reject(new Error(OUTSIDE_WEBCROW_HOME_FOLDER_MESSAGE));
     }
+  });
+};
+
+module.exports = {
+  get
 };

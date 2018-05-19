@@ -1,7 +1,11 @@
 <template>
-  <div class="main-wrapper">
+  <div class="content">
     <div class="breadcrumb"></div>
-    <editor v-model="content" @init="editorInit" lang="html" theme="chrome"></editor>
+    <editor v-model="code"
+            @init="editorInit"
+            lang="javascript"
+            theme="ambiance"
+            :options="{enableLiveAutocompletion: true}"></editor>
   </div>
 </template>
 
@@ -22,22 +26,26 @@
     computed: {
       ...mapGetters('path', [
         'path'
+      ]),
+      ...mapGetters('code', [
+        'code'
       ])
     },
     methods: {
       editorInit() {
         require('brace/ext/language_tools');
-        require('brace/mode/html');
+        require('brace/ext/searchbox');
         require('brace/mode/javascript');
-        require('brace/mode/less');
-        require('brace/theme/chrome');
-        require('brace/snippet/javascript');
+        require('brace/theme/ambiance');
       }
     }
   };
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
-
+  .content {
+    width: 100%;
+    height: 100%;
+  }
 </style>
 

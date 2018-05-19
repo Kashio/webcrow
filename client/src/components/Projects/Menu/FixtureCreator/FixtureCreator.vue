@@ -1,23 +1,23 @@
 <template>
-  <div class="create-test">
-    <i class="fa fa-plus pointer" @click="createTest"></i>
-    <input type="text" placeholder="Test name" class="test-name-input" v-model="test.name"/>
-    <input type="text" placeholder="Website url" class="test-website-url" v-model="test.url"/>
-    <input type="text" placeholder="Username" class="test-username" v-model="test.username"/>
-    <input type="text" placeholder="Password" class="test-password" v-model="test.password"/>
+  <div class="create-fixture">
+    <i class="fa fa-plus pointer" @click="createFixture"></i>
+    <input type="text" placeholder="Fixture name" class="fixture-name-input" v-model="fixture.name"/>
+    <input type="text" placeholder="Website url" class="fixture-website-url" v-model="fixture.url"/>
+    <input type="text" placeholder="Username" class="fixture-username" v-model="fixture.username"/>
+    <input type="text" placeholder="Password" class="fixture-password" v-model="fixture.password"/>
   </div>
 </template>
 
 <script>
   import {mapGetters} from 'vuex';
   import config from 'config';
-  import {TEST} from '../Entry/types';
+  import {FIXTURE} from '../Entry/types';
 
   export default {
-    name: 'TestCreator',
+    name: 'FixtureCreator',
     data() {
       return {
-        test: {
+        fixture: {
           name: '',
           url: '',
           username: '',
@@ -27,25 +27,28 @@
     },
     computed: mapGetters('path', ['path']),
     methods: {
-      createTest() {
+      createFixture() {
         this
           .$store
           .dispatch('entries/createEntry', {
             entry: {
-              path: this.path + this.test.name + TEST_FILE_SUFFIX,
-              name: this.test.name + TEST_FILE_SUFFIX,
-              type: TEST
+              path: this.path + this.fixture.name + FIXTURE_FILE_SUFFIX,
+              name: this.fixture.name + FIXTURE_FILE_SUFFIX,
+              url: this.fixture.url,
+              username: this.fixture.username,
+              password: this.fixture.password,
+              type: FIXTURE
             }
           })
           .then(response => {
             this.$toast({
-              message: `Successfully created test "${response.data}"`,
+              message: `Successfully created fixture "${response.data.replace(new RegExp(`${FIXTURE_FILE_SUFFIX}$`), '')}"`,
               ...config.toast.success
             });
           })
           .catch(error => {
             this.$toast({
-              message: `Error creating test "${error.data}"`,
+              message: `Error creating fixture "${error.data.replace(new RegExp(`${FIXTURE_FILE_SUFFIX}$`), '')}"`,
               ...config.toast.failure
             });
           });
@@ -66,10 +69,10 @@
     color: $create-test-color;
   }
 
-  .test-name-input,
-  .test-website-url,
-  .test-username,
-  .test-password {
+  .fixture-name-input,
+  .fixture-website-url,
+  .fixture-username,
+  .fixture-password {
     width: 70%;
     margin-left: 10px;
     color: white;
@@ -82,16 +85,16 @@
     transition: border 0.3s;
   }
 
-  .test-website-url,
-  .test-username,
-  .test-password {
+  .fixture-website-url,
+  .fixture-username,
+  .fixture-password {
     margin-left: 23px;
   }
 
-  .test-name-input:focus,
-  .test-website-url:focus,
-  .test-username:focus,
-  .test-password:focus {
+  .fixture-name-input:focus,
+  .fixture-website-url:focus,
+  .fixture-username:focus,
+  .fixture-password:focus {
     border-bottom: solid 1px $input-border-color-focus;
   }
 

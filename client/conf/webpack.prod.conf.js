@@ -55,7 +55,7 @@ module.exports = {
     new MiniCssExtractPlugin('index-[contenthash].css'),
     new webpack.DefinePlugin({
       PATH_SEP: JSON.stringify(path.sep),
-      TEST_FILE_SUFFIX: JSON.stringify('.test.js')
+      FIXTURE_FILE_SUFFIX: JSON.stringify('.test.js')
     })
   ],
   context: path.join(process.cwd(), conf.paths.client.src),
@@ -64,7 +64,10 @@ module.exports = {
     filename: '[name]-[hash].js'
   },
   entry: {
-    app: './app.js',
+    app: [
+      'babel-polyfill',
+      './app.js'
+    ],
     vendor: [
       'vue',
       'vue-resource',

@@ -65,7 +65,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       PATH_SEP: JSON.stringify(path.sep),
-      TEST_FILE_SUFFIX: JSON.stringify(".test.js")
+      FIXTURE_FILE_SUFFIX: JSON.stringify('.test.js')
     })
   ],
   devtool: 'source-map',
@@ -74,5 +74,10 @@ module.exports = {
     path: path.join(process.cwd(), conf.paths.client.tmp),
     filename: 'app.js'
   },
-  entry: './app.js'
+  entry: {
+    app: [
+      'babel-polyfill',
+      './app.js'
+    ]
+  }
 };

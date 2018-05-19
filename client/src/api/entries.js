@@ -11,17 +11,20 @@ const get = path => {
   });
 };
 
-const create = path => {
+const create = entry => {
   return axios.post(config.api + resource, {
-    path
+    entry
   });
 };
 
-const rename = (path, name) => {
+const rename = (entry, name) => {
   const params = new URLSearchParams();
-  params.append('path', path);
   params.append('name', name);
-  return axios.put(config.api + resource, params);
+  params.entry = entry;
+  return axios.put(config.api + resource, {
+    entry,
+    name
+  });
 };
 
 const remove = path => {

@@ -5,8 +5,7 @@ Vue.use(VueRouter);
 
 import Layout from '../components/Layout/Layout';
 import ProjectMenu from '../components/Projects/Menu/Menu';
-
-const Bar = {render: h => h('div', 'Bar')};
+import ProjectContent from '@/components/Projects/Content/Content';
 
 export const router = new VueRouter({
   mode: 'history',
@@ -21,7 +20,7 @@ export const router = new VueRouter({
           name: 'project',
           components: {
             menu: ProjectMenu,
-            main: Bar
+            content: ProjectContent
           }
         }
       ]

@@ -1,7 +1,6 @@
-import entriesService from '../../api/entries';
+import entriesService from '@/api/entries';
 import * as types from '../mutation-types';
-import config from 'config';
-import {SHORTCUT, DIRECTORY, TEST} from '@/components/Projects/Menu/Entry/types';
+import {SHORTCUT, DIRECTORY, FIXTURE} from '@/components/Projects/Menu/Entry/types';
 
 const namespaced = true;
 
@@ -14,7 +13,7 @@ const getters = {
 };
 
 const actions = {
-  setEntries({commit}, payload) {
+  getEntries({commit}, payload) {
     return entriesService
       .get(payload.path)
       .then(response => {
@@ -23,37 +22,39 @@ const actions = {
             path: payload.path + PATH_SEP + entry,
             name: entry,
             isEditable: false,
-            type: entry.endsWith(TEST_FILE_SUFFIX) ? TEST : DIRECTORY
+            type: entry.endsWith(FIXTURE_FILE_SUFFIX) ? FIXTURE : DIRECTORY
           };
         });
+        let backDirectoryExists = 0;
         if (payload.path.length) {
           entries.splice(0, 0, {
             path: payload.path.substring(0, payload.path.lastIndexOf(PATH_SEP)),
             name: '..',
             type: SHORTCUT
           });
+          backDirectoryExists = 1;
         }
         commit(types.SET_ENTRIES, {
           entries
         });
-        return entries.length;
+        return entries.length - backDirectoryExists;
       })
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.error(error.message);
+          console.error(error.response.data);
         }
+        error.data = payload.path;
         throw error;
       });
   },
   createEntry({commit}, payload) {
     return entriesService
-      .create(payload.path + payload.entry.name)
+      .create(payload.entry)
       .then(response => {
         commit(types.ADD_ENTRY, {
           entry: {
-            path: payload.path + payload.entry.name,
-            name: payload.entry.name,
-            type: payload.entry.type,
+            ...payload.entry,
             isEditable: false
           }
         });
@@ -62,13 +63,15 @@ const actions = {
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.error(error.message);
+          console.error(error.response.data);
         }
+        error.data = payload.entry.name;
         throw error;
       });
   },
   renameEntry({commit}, payload) {
     return entriesService
-      .rename(payload.entry.path, payload.display)
+      .rename(payload.entry, payload.display)
       .then(response => {
         commit(types.SET_ENTRY_PATH, {
           index: payload.index,
@@ -78,26 +81,36 @@ const actions = {
           index: payload.index,
           name: payload.display
         });
+        response.data = payload.entry.name;
         return response;
       })
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.error(error.message);
+          console.error(error.response.data);
         }
+        error.data = payload.display;
         throw error;
       });
   },
-  deleteEntry({commit}, payload) {
-    entriesService
+  deleteEntry({commit, rootState}, payload) {
+    return entriesService
       .remove(payload.entry.path)
       .then(response => {
         commit(types.REMOVE_ENTRY, payload.index);
+        if (payload.entry.type === FIXTURE && rootState.code.selectedFixturePath === payload.entry.path) {
+          commit('code/SET_SELECTED_FIXTURE_PATH', '', {root: true});
+          commit('code/SET_CODE', '', {root: true});
+        }
+        response.data = payload.entry.name;
         return response;
       })
       .catch(error => {
         if (process.env.NODE_ENV !== 'production') {
           console.error(error.message);
+          console.error(error.response.data);
         }
+        error.data = payload.entry.name;
         throw error;
       });
   }

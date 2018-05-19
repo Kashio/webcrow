@@ -1,7 +1,8 @@
 <template>
-  <div class="entry pointer" @dblclick="onEntryDoubleClick">
+  <div class="entry pointer" @dblclick="onEntryDoubleClick" @click="onEntryClick">
     <i v-if="!isShortcutEntry()" class="fa fa-trash-o" @click="showDeleteEntryModal"></i>
     <i v-if="!isShortcutEntry()" class="fa fa-pencil" @click="toggleEditable({index})"></i>
+    <i v-if="isFixtureEntry()" class="fa fa-registered" @click="toggleEditable({index})"></i>
     <i class="fa" :class="getEntryIconClass()"></i>
     <input class="project-name pointer"
            v-truncated-title
@@ -16,12 +17,12 @@
 <script>
   import {mapMutations} from 'vuex';
   import config from 'config';
-  import {SHORTCUT, DIRECTORY, TEST} from './types';
+  import {SHORTCUT, DIRECTORY, FIXTURE} from './types';
 
   const entryTypeIconMap = {
     SHORTCUT: 'fa-folder-o',
     DIRECTORY: 'fa-folder-o',
-    TEST: 'fa-file-code-o'
+    FIXTURE: 'fa-file-code-o'
   };
 
   export default {
@@ -43,7 +44,7 @@
     data() {
       const name = this.entry.name;
       return {
-        display: name.endsWith(TEST_FILE_SUFFIX) ? name.replace(TEST_FILE_SUFFIX, '') : name
+        display: name.replace(new RegExp(`${FIXTURE_FILE_SUFFIX}$`), '')
       };
     },
     methods: {
@@ -53,31 +54,53 @@
       isShortcutEntry() {
         return this.entry.type === SHORTCUT;
       },
+      isFixtureEntry() {
+        return this.entry.type === FIXTURE;
+      },
       onEntryDoubleClick() {
-        this.$store.commit('path/SET_PATH', {
-          path: this.entry.path
-        });
-        this
-          .$store
-          .dispatch('entries/setEntries', {
+        if (this.entry.type !== FIXTURE) {
+          this.$store.commit('path/SET_PATH', {
             path: this.entry.path
-          })
-          .then(numberOfEntries => {
-            this.$toast({
-              message: `Successfully loaded ${numberOfEntries} entrie(s)`,
-              ...config.toast.success
-            });
-          })
-          .catch(() => {
-            this.$toast({
-              message: 'Error loading entries',
-              ...config.toast.failure
-            });
           });
+          this
+            .$store
+            .dispatch('entries/getEntries', {
+              path: this.entry.path
+            })
+            .then(numberOfEntries => {
+              if (numberOfEntries > 0) {
+                this.$toast({
+                  message: `Successfully loaded ${numberOfEntries} ${numberOfEntries === 1 ? 'entry' : 'entries'}`,
+                  ...config.toast.success
+                });
+              }
+            })
+            .catch(() => {
+              this.$toast({
+                message: 'Error loading entries',
+                ...config.toast.failure
+              });
+            });
+        }
+      },
+      onEntryClick() {
+        if (this.isFixtureEntry()) {
+          this
+            .$store
+            .dispatch('code/getCode', {
+              entry: this.entry
+            })
+            .catch(error => {
+              this.$toast({
+                message: `Error loading code for test "${error.data.replace(new RegExp(`${FIXTURE_FILE_SUFFIX}$`), '')}"`,
+                ...config.toast.failure
+              });
+            });
+        }
       },
       showDeleteEntryModal() {
         this.$modal.show('dialog', {
-          text: `You are about to delete ${this.entry.type.toLowerCase()} <b>${this.entry.name}</b>`,
+          text: `You are about to delete ${this.entry.type.toLowerCase()} <b>${this.entry.name.replace(new RegExp(`${FIXTURE_FILE_SUFFIX}$`), '')}</b>`,
           class: 'app-modal',
           buttons: [
             {
@@ -104,15 +127,15 @@
             entry: this.entry,
             index: this.index
           })
-          .then(() => {
+          .then(response => {
             this.$toast({
-              message: `Successfully deleted entry ${this.entry.name}`,
+              message: `Successfully deleted ${this.entry.type.toLowerCase()} "${response.data.replace(new RegExp(`${FIXTURE_FILE_SUFFIX}$`), '')}"`,
               ...config.toast.success
             });
           })
-          .catch(() => {
+          .catch(error => {
             this.$toast({
-              message: `Error deleting entry ${this.entry.name}`,
+              message: `Error deleting ${this.entry.type.toLowerCase()} "${error.data.replace(new RegExp(`${FIXTURE_FILE_SUFFIX}$`), '')}"`,
               ...config.toast.failure
             });
           });
@@ -127,7 +150,7 @@
         if (this.entry.isEditable) {
           if (this.display !== this.entry.name) {
             if (this.display.length > 0) {
-              const oldName = this.entry.name;
+              const oldName = this.entry.name.replace(new RegExp(`${FIXTURE_FILE_SUFFIX}$`), '');
               this
                 .$store
                 .dispatch('entries/renameEntry', {
@@ -135,16 +158,16 @@
                   display: this.display,
                   index: this.index
                 })
-                .then(() => {
+                .then(response => {
                   this.$toast({
-                    message: `Successfully renamed ${this.entry.type.toLowerCase()} "${oldName}" to "${this.display}"`,
+                    message: `Successfully renamed ${this.entry.type.toLowerCase()} "${oldName}" to "${response.data}"`,
                     ...config.toast.success
                   });
                 })
-                .catch(() => {
+                .catch(error => {
                   this.display = this.entry.name;
                   this.$toast({
-                    message: `Error renaming ${this.entry.type.toLowerCase()} "${this.entry.name}" to "${this.display}"`,
+                    message: `Error renaming ${this.entry.type.toLowerCase()} "${oldName}" to "${error.data}"`,
                     ...config.toast.failure
                   });
                 });
@@ -171,6 +194,7 @@
   $project-color: #797979;
   $project-hover-background-color: #121212;
   $project-hover-color: #a0a0a0;
+  $record-hover-color: #b03434;
 
   .entry {
     &:hover {
@@ -184,6 +208,13 @@
       .fa-pencil {
         &:hover {
           color: $project-hover-color;
+        }
+        display: inline;
+        color: $project-color;
+      }
+      .fa-registered {
+        &:hover {
+          color: $record-hover-color;
         }
         display: inline;
         color: $project-color;
@@ -210,7 +241,13 @@
       display: none;
       position: absolute;
       top: 9px;
-      right: 22px;
+      right: 26px;
+    }
+    .fa-registered {
+      display: none;
+      position: absolute;
+      top: 9px;
+      right: 47px;
     }
     position: relative;
     color: $project-color;

@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/v1/entries', require('./routes/entries.js'));
+app.use('/v1/fixture', require('./routes/fixture.js'));
 // app.use(swaggerize({
 //   api: path.join(__dirname, 'config/swagger.json'),
 //   handlers: path.join(__dirname, 'routes')

@@ -46,12 +46,11 @@
       font-weight: 100;
       font-size: 120%;
     }
-    display: table-row;
+    display: table-cell;
     height: 50px;
     font-family: $font-stack;
     background-color: $primary-color;
-    border-color: $border-color;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid $border-color;
     align-items: center;
     padding: 0 10px;
     user-select: none;

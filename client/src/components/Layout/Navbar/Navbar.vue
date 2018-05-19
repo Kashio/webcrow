@@ -51,44 +51,44 @@
             background: $link-hover-color;
             color: $link-hover-font-color;
           }
-          display:block;
+          display: block;
           width: 34px;
           height: 34px;
-          line-height:34px;
-          text-align:center;
+          line-height: 34px;
+          text-align: center;
           background: $link-color;
           color: $link-font-color;
           margin: 0 auto 10px;
           border-radius: 50%;
-          -webkit-font-smoothing:antialiased;
+          -webkit-font-smoothing: antialiased;
           text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
-          cursor:pointer;
-          transition:all .15s ease;
+          cursor: pointer;
+          transition: all .15s ease;
         }
         width: 50px;
-        height:inherit;
-        display:table-cell;
+        height: inherit;
+        display: table-cell;
         padding: 10px 0;
         background-color: $secondary-color;
       }
       .menu {
-        height:inherit;
-        display:table-cell;
-        position:relative;
+        height: inherit;
+        display: table-cell;
+        position: relative;
         padding: 10px 0;
         font-family: $font-stack;
       }
-      width:inherit;
-      height:inherit;
-      display:table;
+      width: inherit;
+      height: inherit;
+      display: table;
     }
-    display:table-cell;
+    display: table-cell;
     width: 270px;
     height: 100%;
     background-color: $primary-color;
     border-color: $border-color;
     border-right: 1px solid;
-    box-sizing:border-box;
-    user-select:none;
+    box-sizing: border-box;
+    user-select: none;
   }
 </style>

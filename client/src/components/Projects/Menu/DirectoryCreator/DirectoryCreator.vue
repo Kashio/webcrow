@@ -27,20 +27,20 @@
           .$store
           .dispatch('entries/createEntry', {
             entry: {
+              path: this.path + this.directory.name,
               name: this.directory.name,
               type: DIRECTORY
-            },
-            path: this.path
+            }
           })
-          .then(() => {
+          .then(response => {
             this.$toast({
-              message: `Successfully created directory "${this.directory.name}"`,
+              message: `Successfully created directory "${response.data}"`,
               ...config.toast.success
             });
           })
-          .catch(() => {
+          .catch(error => {
             this.$toast({
-              message: `Error creating directory "${this.directory.name}"`,
+              message: `Error creating directory "${error.data}"`,
               ...config.toast.failure
             });
           });
@@ -52,12 +52,20 @@
 <style lang="scss" rel="stylesheet/scss" scoped>
   $input-border-color: #969696;
   $input-border-color-focus: #c9c9c9;
+  $create-directory-color: #797979;
+
+  .fa-plus:hover {
+    &:hover {
+      color: lighten($create-directory-color, 50%);
+    }
+    color: $create-directory-color;
+  }
 
   .directory-name-input {
     width: 70%;
     margin-left: 10px;
     color: white;
-    background-color: inherit;
+    background-color: transparent;
     height: 0;
     outline: none;
     padding: 10px;

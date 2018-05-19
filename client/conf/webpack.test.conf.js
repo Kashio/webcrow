@@ -35,5 +35,10 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   context: path.join(process.cwd(), conf.paths.client.src),
-  entry: './app.js'
+  entry: {
+    app: [
+      'babel-polyfill',
+      './app.js'
+    ]
+  }
 };
