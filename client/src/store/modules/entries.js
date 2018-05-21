@@ -99,8 +99,8 @@ const actions = {
       .then(response => {
         commit(types.REMOVE_ENTRY, payload.index);
         if (payload.entry.type === FIXTURE && rootState.code.selectedFixturePath === payload.entry.path) {
-          commit('code/SET_SELECTED_FIXTURE_PATH', '', {root: true});
-          commit('code/SET_CODE', '', {root: true});
+          commit('code/SET_SELECTED_FIXTURE_PATH', {path: ''}, {root: true});
+          commit('code/SET_CODE', {code: ''}, {root: true});
         }
         response.data = payload.entry.name;
         return response;

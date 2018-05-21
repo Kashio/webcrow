@@ -27,9 +27,14 @@
       ...mapGetters('path', [
         'path'
       ]),
-      ...mapGetters('code', [
-        'code'
-      ])
+      code: {
+        get() {
+          return this.$store.getters['code/code'];
+        },
+        set(code) {
+          this.$store.commit('code/SET_CODE', {code});
+        }
+      }
     },
     methods: {
       editorInit() {
